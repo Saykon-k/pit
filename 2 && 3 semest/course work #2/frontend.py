@@ -239,7 +239,6 @@ class fun():
              elif next_gen[3][i][2] == 1:
                 self.lbl[next_gen[3][i][0]][next_gen[3][i][1]].config(
                                                       background="olive")
-        print(self.Alplants) 
         
     def change_mode(self):
         if self.bul == 0:
@@ -274,7 +273,6 @@ class fun():
                             ()), int(self.life2e.get
                             ()), int(self.reprod2e.get
                             ()), int(self.child2e.get()), 1]]
-            print(vid)
             mb.showinfo('сумма2', vid)
         except:
             mb.showinfo('ошибка', 'введите корректные значения')
