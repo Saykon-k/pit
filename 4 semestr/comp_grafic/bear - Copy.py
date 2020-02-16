@@ -44,6 +44,7 @@ for x in range(width):
                 #draw.point((x,y),(int(a/2),int(b/2),int(c/2)))
 
                 #3_color_roof
+                #более правильное решение - написать три цикла, чтобы не было постоянной проверки, но это же питон здесь все равно будет медленно
                 # avarage_value = int((a + b + c) / 3)
                 # if x < width/3:
                 #         draw.point((x,y),(avarage_value,avarage_value,0))
