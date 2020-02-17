@@ -9,6 +9,7 @@ height = image.size[1] #Определяем высоту
 pix = image.load() #Выгружаем значения пикселей
 #list_of_grey_value = [];
 inc = 0
+inc2 = 0
 for x in range(width):
         for y in range(height):
                 a = pix[x, y][0]
@@ -69,9 +70,9 @@ for x in range(width):
                 # avarage_value = int((a + b + c) / 3)
                 # list_of_grey_value.append(avarage_value)
 
-                draw.point((x,y),(a-inc,b-inc,c-inc))
-                inc = 4+ inc
-        inc = 0
+                #iantarny_roof NAN
+                draw.point((x,y), (a+80,b+40,c))
+
 
 # plt.hist(list_of_green_value, 255)
 # plt.savefig("green_komp_for_lake.png")
@@ -85,7 +86,5 @@ for x in range(width):
 # plt.hist(list_of_grey_value, 255)
 # plt.savefig("lab_1/grey_komp_for_lake.png")
 
-print(width)
-print(height)
-image.save("lab_1/light_roof.jpg")
+image.save("lab_1/iantarny_roof.jpg")
 del draw
