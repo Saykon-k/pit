@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw
 
-image = Image.open("../files/roof.JPG")
+image = Image.open("../lab_1/files/roof.JPG")
 draw = ImageDraw.Draw(image)
 width  = image.size[0]
 height = image.size[1]

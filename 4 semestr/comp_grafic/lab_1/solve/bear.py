@@ -2,7 +2,7 @@ import random
 from PIL import Image, ImageDraw #Подключим необходимые библиотеки
 import matplotlib.pyplot as plt
 
-image = Image.open("files/roof.jpg") #Открываем изображение
+image = Image.open("../files/roof.JPG") #Открываем изображение
 draw = ImageDraw.Draw(image) #Создаем инструмент для рисования
 width  = image.size[0] #Определяем ширину 
 height = image.size[1] #Определяем высоту 	
@@ -75,16 +75,16 @@ for x in range(width):
 
 
 # plt.hist(list_of_green_value, 255)
-# plt.savefig("green_komp_for_lake.png")
+# plt.savefig("F:/pit/4 semestr/comp_grafic/lab_1/out/green_komp_for_lake.png")
 
 # plt.hist(list_of_red_value, 255)
-# plt.savefig("red_komp_for_lake.png")
+# plt.savefig("F:/pit/4 semestr/comp_grafic/lab_1/out/red_komp_for_lake.png")
 
 # plt.hist(list_of_blue_value, 255)
-# plt.savefig("blue_komp_for_lake.png")
+# plt.savefig("F:/pit/4 semestr/comp_grafic/lab_1/out/blue_komp_for_lake.png")
 
-# plt.hist(list_of_grey_value, 255)
-# plt.savefig("lab_1/grey_komp_for_lake.png")
+# plt.hist(F:/pit/4 semestr/comp_grafic/lab_1/out/list_of_grey_value, 255)
+# plt.savefig("F:/pit/4 semestr/comp_grafic/lab_1/out/grey_komp_for_lake.png")
 
-image.save("lab_1/iantarny_roof.jpg")
+image.save("F:/pit/4 semestr/comp_grafic/lab_1/out/KEK.jpg")
 del draw

@@ -2,7 +2,7 @@ import random
 from PIL import Image, ImageDraw #Подключим необходимые библиотеки
 import matplotlib.pyplot as plt
 
-image = Image.open("files/roof.jpg") #Открываем изображение
+image = Image.open("../files/roof.JPG") #Открываем изображение
 draw = ImageDraw.Draw(image) #Создаем инструмент для рисования
 width  = image.size[0] #Определяем ширину
 height = image.size[1] #Определяем высоту
