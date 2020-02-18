@@ -1,15 +1,11 @@
-import random
-from PIL import Image, ImageDraw #Подключим необходимые библиотеки
-import matplotlib.pyplot as plt
+from PIL import Image, ImageDraw
 
-image = Image.open("../files/roof.JPG") #Открываем изображение
-draw = ImageDraw.Draw(image) #Создаем инструмент для рисования
-width  = image.size[0] #Определяем ширину
-height = image.size[1] #Определяем высоту
-pix = image.load() #Выгружаем значения пикселей
-#list_of_grey_value = [];
-inc = 0
-inc2 = 0
+image = Image.open("../files/roof.JPG")
+draw = ImageDraw.Draw(image)
+width  = image.size[0]
+height = image.size[1]
+pix = image.load()
+
 for x in range(width):
         for y in range(height):
                 # triangle_half
@@ -23,8 +19,5 @@ for x in range(width):
                 #         draw.point((x,y),(172,74,245))
                 print()
 
-print(width)
-print(height)
-
-image.save("lab_1/two_triangle.jpg")
+image.save("F:/pit/4 semestr/comp_grafic/lab_1/out//two_triangle.jpg")
 del draw

@@ -1,13 +1,10 @@
-import random
-from PIL import Image, ImageDraw #Подключим необходимые библиотеки
-import matplotlib.pyplot as plt
+from PIL import Image, ImageDraw
 
-image = Image.open("../files/roof.JPG") #Открываем изображение
-draw = ImageDraw.Draw(image) #Создаем инструмент для рисования
-width  = image.size[0] #Определяем ширину
-height = image.size[1] #Определяем высоту
-pix = image.load() #Выгружаем значения пикселей
-#list_of_grey_value = [];
+image = Image.open("../files/roof.JPG")
+draw = ImageDraw.Draw(image)
+width  = image.size[0]
+height = image.size[1]
+pix = image.load()
 inc = 0
 inc2 = 0
 for x in range(width-1, 1 , -1):
@@ -21,5 +18,5 @@ for x in range(width-1, 1 , -1):
         if inc2 == 6:
                 inc += 1
                 inc2 = 0
-image.save("lab_1/light_roof.jpg")
+image.save("F:/pit/4 semestr/comp_grafic/lab_1/out//light_roof.jpg")
 del draw
