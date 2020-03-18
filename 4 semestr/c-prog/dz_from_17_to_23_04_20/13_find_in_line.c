@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//все равно неправильно.
 int  find_in_line(char *str, char word){
   int i ;
   for( i = 0 ;str[i] != '\0'; i++){
