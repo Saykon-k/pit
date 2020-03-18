@@ -23,10 +23,9 @@ int main()
   int half_len_mas = (int) sizeof(a)/4-1;
   if(N  % 2 == 0){
     for(i = 0; i < half_len_mas/2 ; i++ ){
-      printf("a[i] == %d a[half_len_mas-i] == %d\n", a[i],a[half_len_mas-i]);
+      //printf("a[i] == %d a[half_len_mas-i] == %d\n", a[i],a[half_len_mas-i]);
     if(a[i] != a[half_len_mas-i]){
       printf("a[i] == %d  != a[half_len_mas-i]  == %d\n", a[i],a[half_len_mas-i]);
-
       printf("ne polindrom\n");
       i = half_len_mas;
     }
