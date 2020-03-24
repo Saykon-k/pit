@@ -1,7 +1,7 @@
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
-
+import numpy
 
 # Процедура инициализации
 def init():
@@ -47,12 +47,85 @@ def cub(x,y,k,l):
     glVertex3d(x, y - k, l)
     glVertex3d(x - k, y - k, l)
 
-    glColor3f(1, 1,1)
+    glColor3f(1, 1, 0)
     glVertex3d(x, y - k, k + l)
     glVertex3d(x, y, k+l)
     glVertex3d(x, y, l)
     glVertex3d(x, y - k, l)
 
+def cub_2(x,y,k,l):
+    glColor3f(1, 0, 0)
+    glVertex3d(x, y+l,0)
+    glVertex3d(x - k, y+l,0)
+    glVertex3d(x - k, y - k +l, 0)
+    glVertex3d(x, y - k + l, 0)
+
+    glColor3f(0, 1, 0)
+    glVertex3d(x, y+l, k)
+    glVertex3d(x - k, y+ l, k )
+    glVertex3d(x - k, y - k + l, k )
+    glVertex3d(x, y - k+l, k )
+
+    glColor3f(0, 0, 1)
+    glVertex3d(x, y + l, k )
+    glVertex3d(x - k, y + l, k )
+    glVertex3d(x - k, y + l, 0)
+    glVertex3d(x, y + l, 0)
+
+    glColor3f(1, 1, 0)
+    glVertex3d(x - k, y+l, k )
+    glVertex3d(x - k, y - k + l, k )
+    glVertex3d(x - k, y - k + l, 0)
+    glVertex3d(x - k, y + l, 0)
+
+    glColor3f(1, 0, 1)
+    glVertex3d(x - k, y - k + l, k)
+    glVertex3d(x, y - k + l, k )
+    glVertex3d(x, y - k + l, 0)
+    glVertex3d(x - k, y - k +l, 0)
+
+    glColor3f(1, 1, 1)
+    glVertex3d(x, y - k + l, k )
+    glVertex3d(x, y +l, k )
+    glVertex3d(x, y +l, 0)
+    glVertex3d(x, y - k+l, 0)
+
+def cub_3(x,y,k,l):
+    glColor3f(1, 0, 0)
+    glVertex3d(x+l, y, 0)
+    glVertex3d(x-k+l, y, 0)
+    glVertex3d(x-k+l, y-k, 0)
+    glVertex3d(x+l, y-k, 0)
+
+    glColor3f(0, 1, 0)
+    glVertex3d(x+l, y, k)
+    glVertex3d(x - k+l, y, k)
+    glVertex3d(x - k+l, y - k, k)
+    glVertex3d(x+l, y - k, k)
+
+    glColor3f(0, 0, 1)
+    glVertex3d(x+l, y, k)
+    glVertex3d(x - k+l, y, k)
+    glVertex3d(x - k+l, y, 0)
+    glVertex3d(x+l, y, 0)
+
+    glColor3f(1, 1, 0)
+    glVertex3d(x - k + l, y, k)
+    glVertex3d(x - k + l, y - k, k)
+    glVertex3d(x - k +l, y - k,0)
+    glVertex3d(x - k+l, y, 0)
+
+    glColor3f(1, 0, 1)
+    glVertex3d(x - k +l , y - k, k)
+    glVertex3d(x + l, y - k, k )
+    glVertex3d(x + l, y - k, 0)
+    glVertex3d(x - k+l, y - k, 0)
+
+    glColor3f(1, 1,1)
+    glVertex3d(x +l, y - k, k)
+    glVertex3d(x+l, y, k)
+    glVertex3d(x+l, y, 0)
+    glVertex3d(x+l, y - k, 0)
 # Процедура рисования
 def draw(*args, **kwargs):
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) # Очищаем экран и заливаем текущим цветом фона
@@ -60,22 +133,14 @@ def draw(*args, **kwargs):
 
 
     glBegin(GL_QUADS)
-    x = 0.4
-    y = 0.4
+    x = 0
+    y = 0
     k = 0.2
-    l = 0.5
-
-    cub(x,  y,  k,0)
-    cub(-x, y, k, 0)
-    cub(x, -y, k, 0)
-    cub(-x, -y, k, 0)
-
-    cub(x, y, k, l)
-    cub(-x, y,k, l)
-    cub(x, -y, k, l)
-    cub(-x, -y, k, l)
-
-
+    l = 0.2
+    for i in range(-3,4):
+        cub(x,  y,  k,l*i)
+        cub_2(x, y, k, l * i)
+        cub_3(x, y, k, l * i)
 
 
     glEnd()

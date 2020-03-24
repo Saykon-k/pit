@@ -1,7 +1,7 @@
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
-
+import numpy
 
 # Процедура инициализации
 def init():
@@ -47,7 +47,7 @@ def cub(x,y,k,l):
     glVertex3d(x, y - k, l)
     glVertex3d(x - k, y - k, l)
 
-    glColor3f(1, 1,1)
+    glColor3f(1, 1, 1)
     glVertex3d(x, y - k, k + l)
     glVertex3d(x, y, k+l)
     glVertex3d(x, y, l)
@@ -60,23 +60,12 @@ def draw(*args, **kwargs):
 
 
     glBegin(GL_QUADS)
-    x = 0.4
-    y = 0.4
+    x = 0
+    y = 0
     k = 0.2
-    l = 0.5
-
-    cub(x,  y,  k,0)
-    cub(-x, y, k, 0)
-    cub(x, -y, k, 0)
-    cub(-x, -y, k, 0)
-
-    cub(x, y, k, l)
-    cub(-x, y,k, l)
-    cub(x, -y, k, l)
-    cub(-x, -y, k, l)
-
-
-
+    l = 0.2
+    for i in range(-4,5):
+        cub(x,  y,  k,l*i)
 
     glEnd()
 

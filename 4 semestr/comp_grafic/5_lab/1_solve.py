@@ -55,33 +55,16 @@ def cub(x,y,k,l):
 
 # Процедура рисования
 def draw(*args, **kwargs):
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) # Очищаем экран и заливаем текущим цветом фона
-    glRotated(0.125,1,1,1)
-
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)  # Очищаем экран и заливаем текущим цветом фона
+    glRotated(0.125, 1, 1, 1)
 
     glBegin(GL_QUADS)
-    x = 0.4
-    y = 0.4
-    k = 0.2
-    l = 0.5
-
-    cub(x,  y,  k,0)
-    cub(-x, y, k, 0)
-    cub(x, -y, k, 0)
-    cub(-x, -y, k, 0)
-
-    cub(x, y, k, l)
-    cub(-x, y,k, l)
-    cub(x, -y, k, l)
-    cub(-x, -y, k, l)
-
-
-
-
+    cub(0.4,0.4,0.4,0)
     glEnd()
 
-    glutSwapBuffers()           # Меняем буферы
-    glutPostRedisplay()         # Вызываем процедуру перерисовки
+    glutSwapBuffers()  # Меняем буферы
+    glutPostRedisplay()  # Вызываем процедуру перерисовки
+
 
 glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
 glutInitWindowSize(800, 600)
@@ -89,7 +72,6 @@ glutInitWindowPosition(50, 50)
 glutInit(sys.argv)
 glutCreateWindow(b"OpenGL Second Program!")
 # Определяем процедуру, отвечающую за рисование
-n = [1,2,3]
 glutDisplayFunc(draw)
 # Определяем процедуру, отвечающую за обработку обычных клавиш
 glutKeyboardFunc(keyboardkeys)
