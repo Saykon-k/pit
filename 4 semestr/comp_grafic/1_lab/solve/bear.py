@@ -12,10 +12,9 @@ inc = 0
 inc2 = 0
 for x in range(width):
         for y in range(height):
-                a = pix[x, y][0]
-                b = pix[x, y][1]
-                c = pix[x, y][2]
-                #shades of gray
+                if y < height / 2:
+                        draw.point((x, y), (64, 64, 64))
+
                 #draw.point((x, y), (x, x, x))
 
                 #yellow_bear
@@ -71,7 +70,6 @@ for x in range(width):
                 # list_of_grey_value.append(avarage_value)
 
                 #iantarny_roof NAN
-                draw.point((x,y), (a+80,b+40,c))
 
 
 # plt.hist(list_of_green_value, 255)
@@ -85,6 +83,6 @@ for x in range(width):
 
 # plt.hist(F:/pit/4 semestr/comp_grafic/lab_1/out/list_of_grey_value, 255)
 # plt.savefig("F:/pit/4 semestr/comp_grafic/lab_1/out/grey_komp_for_lake.png")
-
-image.save("F:/pit/4 semestr/comp_grafic/lab_1/out/KEK.jpg")
+image.show()
+image.save("F:/pit/4 semestr/comp_grafic/lab_1/out/Nan1.jpg")
 del draw
