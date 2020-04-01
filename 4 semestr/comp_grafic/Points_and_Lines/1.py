@@ -7,6 +7,6 @@ class Point:
         return "(%.2f,%.2f)"%(self.x,self.y)
 point = Point(3.445,5.45435)
 print(point)
-x= 4
-result = x * 10 if x < 10 else result = x / 10
+x= 11
+result = x * 10 if x < 10 else  x / 10
 print(result)

@@ -1,5 +1,4 @@
 class Line:
-
     def __init__(self, A, B, C):
         self.A = A
         self.B = B
@@ -13,3 +12,9 @@ class Line:
 
     def fromCoord(x1, y1, x2, y2):
         return Line(y1 - y2, x2 - x1, x1 * y2 - x2 * y1)
+    
+    def distanceToZero(self):
+        if  (self.A**2+self.B**2)**0.5 != 0:
+            return abs(self.C)/(self.A**2+self.B**2)**0.5
+        else:
+            return self.C
