@@ -21,7 +21,8 @@ class Line:
     def distanceToPoint(self, point):
         if (self.A**2+self.B**2)**0.5 != 0:
             return abs(self.A*point.X + self.B*point.Y + self.C)/(self.A**2+self.B**2)**0.5
-
+    def isParallel(self, line):
+        return abs(self.A*line.B - self.B*line.A) <= 0.001
 class Point:
     def __init__(self, X, Y):
         self.X = X
