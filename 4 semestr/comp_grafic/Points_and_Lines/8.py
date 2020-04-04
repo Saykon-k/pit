@@ -27,6 +27,8 @@ class Line:
         if not self.isParallel(line):
             x_point = (line.C*self.B - self.C*line.B)/(line.B*self.A - self.B*line.A)
             y_point = (line.C*self.A - self.C*line.A)/(-line.B*self.A + self.B*line.A)
+            x_point = 0 if x_point ==0 else x_point
+            y_point = 0 if y_point ==0 else y_point
             return Point(x_point,y_point)
         else:
             return None
@@ -34,7 +36,16 @@ class Line:
         first = self.A*point1.X + self.B*point1.Y + self.C
         sec  =self.A*point2.X + self.B*point2.Y + self.C
         return False if first*sec <0 else True
-
+    def perpendicularLine(self, point):
+        a = -1
+        if self.B != 0:
+            b = self.A/self.B
+        else:
+            b = self.A
+        c = point.X - b*point.Y
+        return Line(a, b, c)
+    def nearPoint(self,point):
+        return self.intersection(self.perpendicularLine(point))
 class Point:
     def __init__(self, X, Y):
         self.X = X
@@ -46,6 +57,6 @@ class Point:
     def distanceTo(self, point):
         return ((self.X - point.X) ** 2 + (self.Y - point.Y) ** 2)**0.5
 point1 = Point(-3,0)
-point2 = Point(0,1)
-line = Line(12,2,-6)
-print(line.oneSide(point1,point2))
+point2 = Point(3,4)
+line = Line.fromCoord(1,0,0,1)
+print(line.nearPoint(point2))

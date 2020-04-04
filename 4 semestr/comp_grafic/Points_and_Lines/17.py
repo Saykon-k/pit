@@ -89,6 +89,19 @@ class Line:
             return True
         else:
             return False
+
+    def rotatedLine(self,point):
+       ch1 = point.X*self.A
+       ch2 = point.Y*self.B
+       mov_to_zer = Line(self.A,self.B,self.C+ch1+ch2)
+       charge_x_y = Line(mov_to_zer.B,(-1)*mov_to_zer.A,mov_to_zer.C)
+       charge_x_y = Line(charge_x_y.A,charge_x_y.B,charge_x_y.C+charge_x_y.A*(-point.X)+charge_x_y.B*(-point.Y))
+       charge_x_y.normalize()
+       return charge_x_y
+
+def sign(x):
+    return -1 if x < 0 else 1
+
 class Point:
     def __init__(self, X, Y):
         self.X = X
@@ -100,5 +113,5 @@ class Point:
     def distanceTo(self, point):
         return ((self.X - point.X) ** 2 + (self.Y - point.Y) ** 2)**0.5
 line = Line.fromCoord(1,0,0,1)
-p = Point(1, 0)
-print(line.insideTreug(p))
+p = Point(2, 2)
+print(line.rotatedLine(p))

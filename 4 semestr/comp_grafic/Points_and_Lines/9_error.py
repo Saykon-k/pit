@@ -45,3 +45,8 @@ class Point:
 
     def distanceTo(self, point):
         return ((self.X - point.X) ** 2 + (self.Y - point.Y) ** 2)**0.5
+#ок
+l = Line.fromCoord(-3,0,0,1)
+po = Point(12,2)
+po1 = Point(-6,-0.9999)
+print(l.oneSide(po,po1))
