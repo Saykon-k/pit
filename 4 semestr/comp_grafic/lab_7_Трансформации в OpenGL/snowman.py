@@ -176,22 +176,22 @@ def draw(*args, **kwargs):
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
     else:
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
-
+    a = 0.2
     glPushMatrix()
-    glColor3f(1, 0, 0)
+    glColor3f(a, a, a)
     glScaled(1, 1, 1)
     sphere()
     glPopMatrix()
 
     glPushMatrix()
-    glColor3f(1, 0, 0)
+    glColor3f(a*2, a/2, 0)
     glTranslated(0, 0, 0.5)
     glScaled(0.45, 0.3, 0.4)
     thor()
     glPopMatrix()
 
     glPushMatrix()
-    glColor3f(1, 0, 0)
+    glColor3f(a, a, a)
     glTranslated(0, 0, 0.75)
     glScaled(0.5, 0.5, 0.5)
     sphere()
@@ -242,7 +242,7 @@ def draw(*args, **kwargs):
 
     #right hand
     glPushMatrix()
-    glColor3f(1, 0, 0)
+    glColor3f(a, a, a)
     glTranslated(0.45, 0, 0.4)
     glRotated(45, 1, 1, 0)
     glScaled(0.3, 0.3, 0.3)
@@ -251,7 +251,7 @@ def draw(*args, **kwargs):
 
     #left hand
     glPushMatrix()
-    glColor3f(1, 0, 0)
+    glColor3f(a, a, a)
     glTranslated(-0.45, 0, 0.4)
     glRotated(-45, 1, 1, 0)
     glScaled(0.3, 0.3, 0.3)

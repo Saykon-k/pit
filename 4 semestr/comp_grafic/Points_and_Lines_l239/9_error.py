@@ -5,9 +5,9 @@ class Line:
         self.C = C
 
     def __str__(self):
-        for_pr_A = "-%.2f" % (abs(self.A)) if self.a < 0 else "%.2f" % (self.A)
-        for_pr_B = "- %.2f" % (abs(self.B)) if self.b < 0 else "+ %.2f" % (self.B)
-        for_pr_C = "- %.2f" % (abs(self.C)) if self.c < 0 else "+ %.2f" % (self.C)
+        for_pr_A = "-%.2f" % (abs(self.A)) if self.A < 0 else "%.2f" % (self.A)
+        for_pr_B = "- %.2f" % (abs(self.B)) if self.B < 0 else "+ %.2f" % (self.B)
+        for_pr_C = "- %.2f" % (abs(self.C)) if self.C < 0 else "+ %.2f" % (self.C)
         return "{}x {}y {} = 0".format(for_pr_A, for_pr_B, for_pr_C)
 
     def fromCoord(x1, y1, x2, y2):
@@ -30,10 +30,14 @@ class Line:
             return Point(x_point,y_point)
         else:
             return None
-    def  oneSide(self,point1,point2):
-        first = self.A*point1.X + self.B*point1.Y + self.C
-        sec  =self.A*point2.X + self.B*point2.Y + self.C
-        return False if first*sec <0 else True
+
+    def oneSide(self, point1, point2):
+        first = self.A * point1.X + self.B * point1.Y + self.C
+        sec = self.A * point2.X + self.B * point2.Y + self.C
+        if round(first*sec,4) + 0.001 >= 0:
+            return True
+        else:
+            return False
 
 class Point:
     def __init__(self, X, Y):
@@ -45,8 +49,7 @@ class Point:
 
     def distanceTo(self, point):
         return ((self.X - point.X) ** 2 + (self.Y - point.Y) ** 2)**0.5
-#ок
-l = Line.fromCoord(-3,0,0,1)
-po = Point(12,2)
-po1 = Point(-6,-0.9999)
-print(l.oneSide(po,po1))
+line1 = Line.fromCoord(-3, 0, 0, 1)
+point1 = Point(12, 2)
+point2 = Point(-6, -0.9999)
+print(line1.oneSide(point1, point2))
