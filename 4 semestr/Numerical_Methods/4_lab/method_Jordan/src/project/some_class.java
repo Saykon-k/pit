@@ -1,5 +1,7 @@
 package project;
 
+import java.util.ArrayList;
+
 public class some_class {
 
 	public static void main(String[] args) {
@@ -81,6 +83,7 @@ public class some_class {
 
 	}
 	public static void methodIkobi(double matr[][],double eps) {
+		ArrayList<double [][]> matrV = new ArrayList();
 		double error=eps+1;
 		for(int i = 0; error > eps ; i++) {
 		System.out.println(i+" шаг");
@@ -89,6 +92,7 @@ public class some_class {
 		double rotate_matrix[][] = new double [matr.length][matr.length];
 		double fi = 0.5*Math.atan(2*matr[found_i_j[0]][found_i_j[1]]/(matr[found_i_j[0]][found_i_j[0]]-matr[found_i_j[1]][found_i_j[1]]));
 		fill_rotate_matrix(rotate_matrix,found_i_j,fi);
+		matrV.add(rotate_matrix);
 		System.out.println("матрица вращения: ");
 		printmatrix(rotate_matrix);
 		System.out.println();
@@ -102,6 +106,19 @@ public class some_class {
 		System.out.println();
 		//}while(error < eps);
 		}
+		System.out.println("результат вычислений: ");
 		printmatrix(matr);
+		System.out.println("собственные значения: ");
+		System.out.println("");
+		for(int i = 0; i < matr.length;i++) System.out.println("собственное число матрицы лямба с индексом "+i+" = "+matr[i][i]);
+		System.out.println();
+
+		System.out.println("После того,как были найдены все значения находим собственные вектора путем перемножения всех матриц вращения, которые получились(сохраняются в список matrV)");
+		double res_Vector[][] = new double[matr.length][matr.length];
+		res_Vector = matrV.get(0);
+		for(int i = 1; i < matrV.size();i++) res_Vector = multiplyByMatrix(res_Vector,matrV.get(i));
+		printmatrix(res_Vector);
+		
+		System.out.println("");
 }
 }
