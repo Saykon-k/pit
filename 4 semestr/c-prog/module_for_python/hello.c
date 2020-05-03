@@ -162,7 +162,7 @@ static PyMethodDef hello_methods[] = {
     },
     {
         "intersection", intersection, METH_VARARGS,
-        "Print 'hello xxx' from a method defined in a C extension."
+        "intersection of two lists"
     },
     {NULL, NULL, 0, NULL}
 };
