@@ -74,6 +74,67 @@ static PyObject* pow_complex(PyObject *self, PyObject *args) {
     Py_RETURN_NONE;
 }
 
+static PyObject* vectors2d_sum(PyObject *self, PyObject *args) {
+  double x1, x2;
+  double y1, y2;
+  if (!PyArg_ParseTuple(args, "dddd", &x1, &x2, &y1, &y2)) {
+      return NULL;
+  }
+  printf("%lf \n %lf \n", x1 + y1, x2 + y2);
+return Py_BuildValue("dd", x1 + y1, x2 + y2);
+}
+
+static PyObject* vectors2d_sub(PyObject *self, PyObject *args) {
+  double x1, x2;
+  double y1, y2;
+  if (!PyArg_ParseTuple(args, "dddd", &x1, &x2, &y1, &y2)) {
+      return NULL;
+  }
+  printf("%lf \n %lf \n", x1 - y1, x2 - y2);
+return Py_BuildValue("dd", x1 - y1, x2 - y2);
+}
+
+static PyObject* vectors2d_scalar_prod(PyObject *self, PyObject *args) {
+  double x1, x2;
+  double y1, y2;
+  if (!PyArg_ParseTuple(args, "dddd", &x1, &x2, &y1, &y2)) {
+      return NULL;
+  }
+  printf("%lf\n", x1*y1 + x2*y2);
+  return Py_BuildValue("d", x1*y1 + x2*y2);
+}
+
+
+static PyObject* vectors3d_sum(PyObject *self, PyObject *args) {
+  double x1, x2, x3;
+  double y1, y2, y3;
+  if (!PyArg_ParseTuple(args, "dddddd", &x1, &x2, &x3, &y1, &y2, &y3)) {
+      return NULL;
+  }
+  printf("%lf \n %lf \n %lf \n", x1 + y1, x2 + y2, x3 + y3);
+return Py_BuildValue("ddd", x1 + y1, x2 + y2, x3 + y3);
+}
+
+static PyObject* vectors3d_sub(PyObject *self, PyObject *args) {
+  double x1, x2, x3;
+  double y1, y2, y3;
+  if (!PyArg_ParseTuple(args, "dddddd", &x1, &x2, &x3, &y1, &y2, &y3)) {
+      return NULL;
+  }
+  printf("%lf \n %lf \n %lf \n", x1 - y1, x2 - y2, x3 - y3);
+return Py_BuildValue("ddd", x1 - y1, x2 - y2, x3 - y3);
+}
+
+static PyObject* vectors3d_scalar_prod(PyObject *self, PyObject *args) {
+  double x1, x2, x3;
+  double y1, y2, y3;
+  if (!PyArg_ParseTuple(args, "dddddd", &x1, &x2, &x3, &y1, &y2, &y3)) {
+      return NULL;
+  }
+  printf("%lf\n", x1*y1 + x2*y2 + x3*y3);
+  return Py_BuildValue("d", x1*y1 + x2*y2 + x3*y3);
+}
+
 static PyObject *intersection(PyObject *self, PyObject *args) {
     PyObject *pylist1, *pylist2;
     double  double_item1, double_item2, len1, len2;
@@ -158,11 +219,35 @@ static PyMethodDef hello_methods[] = {
     },
     {
         "pow_complex", pow_complex, METH_VARARGS,
-        "exponentiation of a complex number\nThe first argument to the function is the real part.\n second imaginary\n third degree"
+        "exponentiation of a complex number\nThe first argument to the function is the real part.\nsecond imaginary\nthird degree"
     },
     {
         "intersection", intersection, METH_VARARGS,
-        "intersection of two lists"
+        "Print 'hello xxx' from a method defined in a C extension."
+    },
+    {
+        "vectors2d_sum", vectors2d_sum, METH_VARARGS,
+        "subtraction of 2-dimension vectors."
+    },
+    {
+        "vectors2d_sub", vectors2d_sub, METH_VARARGS,
+        "sum of 2-dimension vectors."
+    },
+    {
+        "vectors2d_scalar_prod", vectors2d_scalar_prod, METH_VARARGS,
+        "scalar product of 2-dimension vectors."
+    },
+    {
+        "vectors3d_sum", vectors3d_sum, METH_VARARGS,
+        "sum of 3-dimension vectors."
+    },
+    {
+        "vectors3d_sub", vectors3d_sub, METH_VARARGS,
+        "subtraction of 3-dimension vectors."
+    },
+    {
+        "vectors3d_scalar_prod", vectors3d_scalar_prod, METH_VARARGS,
+        "scalar product of 3-dimension vectors."
     },
     {NULL, NULL, 0, NULL}
 };
