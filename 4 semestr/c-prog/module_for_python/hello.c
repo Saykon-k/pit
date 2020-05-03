@@ -2,7 +2,6 @@
 #include <Python.h>
 #include <math.h>
 #define M_PI 3.14159265358979323846
-// Module method definitions
 static PyObject* subtraction(PyObject *self, PyObject *args) {
   double x;
   double x1;
@@ -12,7 +11,7 @@ static PyObject* subtraction(PyObject *self, PyObject *args) {
       return NULL;
   }
   printf("%lf real \n %lf im\n",x-y,x1-y1 );
-    Py_RETURN_NONE;
+return Py_BuildValue("dd",x-y,x1-y1 );
 }
 
 static PyObject* sum(PyObject *self, PyObject *args) {
@@ -24,7 +23,7 @@ static PyObject* sum(PyObject *self, PyObject *args) {
       return NULL;
   }
   printf("%lf real \n %lf im\n",x+y,x1+y1 );
-    Py_RETURN_NONE;
+  return Py_BuildValue("dd",x+y,x1+y1 );
 }
 
 static PyObject* mult(PyObject *self, PyObject *args) {
@@ -36,7 +35,7 @@ static PyObject* mult(PyObject *self, PyObject *args) {
       return NULL;
   }
   printf("%lf real \n %lf im\n",x*y-x1*y1,x*y1+x1*y );
-    Py_RETURN_NONE;
+  return Py_BuildValue("dd",x*y-x1*y1,x*y1+x1*y );
 }
 
 static PyObject* division(PyObject *self, PyObject *args) {
@@ -48,7 +47,7 @@ static PyObject* division(PyObject *self, PyObject *args) {
       return NULL;
   }
   printf("%lf real \n %lf im\n",(x*y+x1*y1)/(y*y+y1*y1),(x1*y-x*y1)/(y*y+y1*y1));
-    Py_RETURN_NONE;
+  return Py_BuildValue("dd",(x*y+x1*y1)/(y*y+y1*y1),(x1*y-x*y1)/(y*y+y1*y1));
 }
 static PyObject* pow_complex(PyObject *self, PyObject *args) {
   double x;
@@ -61,27 +60,30 @@ static PyObject* pow_complex(PyObject *self, PyObject *args) {
   }
   r = sqrt(x*x+y*y);
   if(x < 0 && y<0){
-        alfa = atan(y/x)-M_PI;
+        alfa = atan(y/x);
   }
   if(x<0 && y>=0){
-        alfa = atan(y/x)+M_PI;
+        alfa = atan(y/x);
   }
   if(x>=0){
         alfa = atan(y/x);
   }
+  printf("%lf - x \n %lf - y\n", x , y  );
+  printf("%lf  - alfa\n", alfa );
   printf("%lf real \n %lf im\n",r*cos(n*alfa),r*sin(n*alfa));
     Py_RETURN_NONE;
 }
 
-static PyObject *py_expected_value(PyObject *self, PyObject *args) {
+static PyObject *intersection(PyObject *self, PyObject *args) {
     PyObject *pylist1, *pylist2;
     double  double_item1, double_item2, len1, len2;
     double result = 0;
     double* list1;
     double* list2;
     double* inter;
-    int i,i1;
-    int i2 = -1;
+    int i,i1,i3;
+    int i2 = 0;
+    int check = 1;
 
     if (!PyArg_ParseTuple(args,"OO",&pylist1, &pylist2)) {
         return NULL;
@@ -108,56 +110,58 @@ static PyObject *py_expected_value(PyObject *self, PyObject *args) {
         list2[i] = double_item2;
       //  printf("%lf\n", list2[i] );
     }// эт заполняет второй массив
+
     for(i = 0; i<len1;i++){
       for(i1 = 0; i1<len2;i1++){
-        printf("f\n");
-        if(list1[i]== list2[i1]){
-          //printf("%d\n",i );
-          i2++;
-          inter[i2] = list1[i];
-        }
+        if(list1[i] == list2[i1]){
+            for(i3 = 0; i3<i2; i3++){
+              if(inter[i3] == list2[i1]){
+                check = 0;
+                break;
+              }
+            }
+            if(check==0){
+            }else{
+            inter[i2] = list1[i];
+            i2++;
+          }
+          check = 1;
       }
     }
-    for(i = 0; i<= sizeof(inter)/8;i++){//воспомнить,какой критерий остановки динамического массива
-      printf("%lf\n", inter[i]);
+  }
+    PyObject *tup = PyTuple_New(i2);
+
+    for(i = 0; i<i2;i++){
+      printf("%lf ", inter[i]);
+      PyTuple_SET_ITEM(tup, i, PyLong_FromDouble(inter[i]));
+
     }
-    return Py_BuildValue("d", result);
+    printf("\n");
+    return Py_BuildValue("O", tup);
 }
-
-/* here is how you expose it to Python code: */
-
-
-// Method definition object for this extension, these argumens mean:
-// ml_name: The name of the method
-// ml_meth: Function pointer to the method implementation
-// ml_flags: Flags indicating special features of this method, such as
-//          accepting arguments, accepting keyword arguments, being a
-//          class method, or being a static method of a class.
-// ml_doc:  Contents of this method's docstring
-//какое-то оформление
 static PyMethodDef hello_methods[] = {
     {
         "subtraction", subtraction, METH_VARARGS,
-        "Print 'hello world' from a method defined in a C extension."
+        "subtraction of two complex numbers\nthe first two arguments of the function are the real and imaginary parts of the first number, the second two are the real and imaginary parts of the second number"
     },
     {
         "sum", sum, METH_VARARGS,
-        "Print 'hello xxx' from a method defined in a C extension."
+        "sum of two complex numbers\nthe first two arguments of the function are the real and imaginary parts of the first number, the second two are the real and imaginary parts of the second number"
     },
     {
         "mult", mult, METH_VARARGS,
-        "Print 'hello xxx' from a method defined in a C extension."
+        "multiplication of two complex numbers\nthe first two arguments of the function are the real and imaginary parts of the first number, the second two are the real and imaginary parts of the second number"
     },
     {
         "division", division, METH_VARARGS,
-        "Print 'hello xxx' from a method defined in a C extension."
+        "division of two complex numbers\nthe first two arguments of the function are the real and imaginary parts of the first number, the second two are the real and imaginary parts of the second number"
     },
     {
         "pow_complex", pow_complex, METH_VARARGS,
-        "Print 'hello xxx' from a method defined in a C extension."
+        "exponentiation of a complex number\nThe first argument to the function is the real part.\n second imaginary\n third degree"
     },
     {
-        "py_expected_value", py_expected_value, METH_VARARGS,
+        "intersection", intersection, METH_VARARGS,
         "Print 'hello xxx' from a method defined in a C extension."
     },
     {NULL, NULL, 0, NULL}
