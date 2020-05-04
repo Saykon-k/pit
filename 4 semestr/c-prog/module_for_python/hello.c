@@ -146,6 +146,7 @@ static PyObject *intersection(PyObject *self, PyObject *args) {
     int i2 = 0;
     int check = 1;
 
+
     if (!PyArg_ParseTuple(args,"OO",&pylist1, &pylist2)) {
         return NULL;
     }
