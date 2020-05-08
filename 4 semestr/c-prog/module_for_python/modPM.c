@@ -11,7 +11,6 @@ static PyObject* subtraction(PyObject *self, PyObject *args) {
   }
     return Py_BuildValue("dd",x-y,x1-y1 );
 }
-
 static PyObject* sum(PyObject *self, PyObject *args) {
   double x;
   double x1;
