@@ -1,5 +1,5 @@
 https://docs.google.com/document/d/1UAjVPEPxKYtCKgarHgfIMaETHEr0qLNneKsIM9bfNhs/edit
-1. Download
+1. Download 2 files
 2. Make sure that files located in one folder
 3. Open cmd
 4 Use command "cd" to transition in the folder that contain those files
