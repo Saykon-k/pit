@@ -1,0 +1,13 @@
+https://docs.google.com/document/d/1UAjVPEPxKYtCKgarHgfIMaETHEr0qLNneKsIM9bfNhs/edit
+1. Download
+2. Make sure that files located in one folder
+3. Open cmd
+4 Use command "cd" to transition in the folder that contain those files
+5.use command "python setup.py build" for buildning module
+if you catch error "unable to find vcvarsall.bat", you must have to make sure that you have microsoft visual studio on your desktop and it has c++/c
+6.use command "python setup.py install"
+7.write python
+8.write "import modPM"
+9. now you can use our module
+authors: Saykov Konstantin
+         Esmurziev Alexey
