@@ -1,8 +1,8 @@
 from distutils.core import setup, Extension
 
-hello_module = Extension('hello', sources = ['hello.c'])
+modPM = Extension('modPM', sources = ['modPM.c'])
 
-setup(name='he',
+setup(name='modPM',
       version='0.1.0',
-      description='Hello world module written in C',
-      ext_modules=[hello_module])
+      description='Module for count complex numbers and vectors',
+      ext_modules=[modPM])
