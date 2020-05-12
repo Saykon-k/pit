@@ -14,12 +14,12 @@ class Vector3:
     def norm(self):
         selfec_len = (self.x * self.x + self.y * self.y + self.z * self.z) ** 0.5
         if selfec_len != 0:
-            return (self.x/selfec_len,self.y/selfec_len,self.z/selfec_len)
+            return Vector3(self.x/selfec_len,self.y/selfec_len,self.z/selfec_len)
         else:
             return Vector3(0,0,0)
-    def VxR(self, n):
-        return (self.x * n, self.y * n, self.z * n)
+    def xR(self, n):
+        return Vector3(self.x * n, self.y * n, self.z * n)
     def plusV(self,vec2):
-        return ((self.x + vec2.x), (self.y + vec2.y), (self.z + vec2.z))
+        return Vector3((self.x + vec2.x), (self.y + vec2.y), (self.z + vec2.z))
     def minusV(self,vec2):
-        return ((self.x - vec2.x), (self.y - vec2.y), (self.z - vec2.z))
+        return Vector3((self.x - vec2.x), (self.y - vec2.y), (self.z - vec2.z))

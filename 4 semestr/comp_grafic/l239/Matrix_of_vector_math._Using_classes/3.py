@@ -14,6 +14,7 @@ class Vector3:
     def norm(self):
         selfec_len = (self.x * self.x + self.y * self.y + self.z * self.z) ** 0.5
         if selfec_len != 0:
-            return (self.x/selfec_len,self.y/selfec_len,self.z/selfec_len)
+            return Vector3(self.x/selfec_len,self.y/selfec_len,self.z/selfec_len)
         else:
             return Vector3(0,0,0)
+print(Vector3(1,0,0).norm())
