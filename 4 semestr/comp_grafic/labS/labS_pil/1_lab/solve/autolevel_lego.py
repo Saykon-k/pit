@@ -13,7 +13,7 @@ def min_b(gist):
         i-=1
     return i
 
-image = Image.open("../files/lego.jpg")
+image = Image.open("../files/Lego.jpg")
 draw = ImageDraw.Draw(image)
 width  = image.size[0]
 height = image.size[1]
