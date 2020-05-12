@@ -20,6 +20,11 @@ class Matrix3x3:
         self.y = self.y.plusV(matr2.y)
         self.z = self.z.plusV(matr2.z)
         return self
+    def minusM(self,matr2):
+        self.x = self.x.minusV(matr2.x)
+        self.y = self.y.minusV(matr2.y)
+        self.z = self.z.minusV(matr2.z)
+        return self
 
 class Vector3:
     def __init__(self,x,y,z):

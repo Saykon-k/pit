@@ -3,6 +3,9 @@ class Matrix3x3:
         self.x = Vector3(x.x,x.y,x.z)
         self.y = Vector3(y.x,y.y,y.z)
         self.z = Vector3(z.x,z.y,z.z)
+        self.tr1 = Vector3(x.x,y.x,z.x)
+        self.tr2 = Vector3(x.y,y.y,z.y)
+        self.tr3 = Vector3(x.z,y.z,z.z)
     def __str__(self):
         return "((%.2f, %.2f, %.2f),\n (%.2f, %.2f, %.2f),\n (%.2f, %.2f, %.2f))"%((self.x).x,(self.x).y,(self.x).z, (self.y).x,(self.y).y,(self.y).z, (self.z).x,(self.z).y,(self.z).z)
     def I(self):
@@ -20,7 +23,19 @@ class Matrix3x3:
         self.y = self.y.plusV(matr2.y)
         self.z = self.z.plusV(matr2.z)
         return self
+    def minusM(self,matr2):
+        self.x = self.x.minusV(matr2.x)
+        self.y = self.y.minusV(matr2.y)
+        self.z = self.z.minusV(matr2.z)
+        return self
 
+    def xV(self, vec1):
+        self.x = self.x.dotV(vec1)
+        self.y = self.y.dotV(vec1)
+        self.z = self.z.dotV(vec1)
+        return Vector3(self.x,self.y,self.z)
+    def xM(self,matr1):
+        return Matrix3x3(Vector3((self.x).dotV(matr1.tr1),(self.x).dotV(matr1.tr2),(self.x).dotV(matr1.tr3)),Vector3((self.y).dotV(matr1.tr1),(self.y).dotV(matr1.tr2),(self.y).dotV(matr1.tr3)), Vector3((self.z).dotV(matr1.tr1),(self.z).dotV(matr1.tr2),(self.z).dotV(matr1.tr3)))
 class Vector3:
     def __init__(self,x,y,z):
         self.x = x
