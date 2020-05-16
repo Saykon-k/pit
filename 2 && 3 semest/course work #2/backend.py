@@ -219,7 +219,6 @@ def next_step(plants,vid,pole,dead_plants):
     
     return  pole,new_plants
 
-
 #главная функция
 def dly(plants, pole,vid,pole_pocva):
     dead_plants = []
