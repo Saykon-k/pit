@@ -222,7 +222,6 @@ def next_step(plants,vid,pole,dead_plants):
 
 #главная функция
 def dly(plants, pole,vid,pole_pocva):
-    
     dead_plants = []
     dead_index = 0
     new_children  = []

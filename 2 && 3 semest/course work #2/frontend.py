@@ -219,7 +219,7 @@ class fun():
         next_gen = []
         last_step = []
         
-        for i in range(1):
+        for i in range(2):
             next_gen = kent.new_generation(self.Alplants, self.Alpole,
                                            vid, self.Alpocva)
 
@@ -229,14 +229,8 @@ class fun():
             
             if self.Alplants == []:
                 break
-        print(next_gen[3])
-        for y in range(int(self.entryy.get())+1):
-            for x in range(int(self.entryx.get())+1):
-                self.lbl[y][x] = Label(self.frame,background="white")
-                self.lbl[y][x].place(relx=x/(int(self.entryx.get())),
-                                rely=y/(int(self.entryy.get())),
-                                relwidth=1/(int(self.entryx.get())+1),
-                                relheight=1/(int(self.entryy.get())+1))
+
+
         for i in range(len(next_gen[3])):
              if next_gen[3][i][2] == 0:
                 self.lbl[next_gen[3][i][0]][next_gen[3][i][1]].config(
@@ -302,7 +296,7 @@ class fun():
                 
         pole = np.zeros((geom[1],geom[0]))
         pole_pocva = np.zeros((geom[1],geom[0]))
-     
+
         real_dates = kent.conver_data(dct, dct_pocva1, pole, pole_pocva,
                                       food_amount, vid)
 
@@ -323,7 +317,6 @@ class fun():
                 break
                             
         dct = {}
-        print(next_gen[3])
         for i in range(len(next_gen[3])):
              if next_gen[3][i][2] == 0:
                 self.lbl[next_gen[3][i][0]][next_gen[3][i][1]].config(
@@ -332,11 +325,9 @@ class fun():
              elif next_gen[3][i][2] == 1:
                 self.lbl[next_gen[3][i][0]][next_gen[3][i][1]].config(
                                                        background="olive")
-
         self.Alplants = plants
         self.Alpocva = pole_pocva
         self.Alpole = pole
-        
 
     def dstr(self):
         self.root.destroy()
