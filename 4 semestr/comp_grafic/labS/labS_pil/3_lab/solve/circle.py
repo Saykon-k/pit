@@ -72,8 +72,8 @@ for x in range(width):
 #bezie((width//2,0), (width//2,height//2), (width,height), (width//2,height))
 #bezie((width//2,0), (width//2,height//2), (0,height), (width//2,height))
 # radish
-#bezie((width*8//16,height*0//16), (width*8//16,height*4//16), (width*4//16,height*4//16), (width*4//16,height*7//16))
-#bezie((width*8//16,height*0//16), (width*8//16,height*4//16), (width*12//16,height*4//16), (width*12//16,height*7//16))
+#bezie((width*lab_8//16,height*0//16), (width*lab_8//16,height*4//16), (width*4//16,height*4//16), (width*4//16,height*7//16))
+#bezie((width*lab_8//16,height*0//16), (width*lab_8//16,height*4//16), (width*12//16,height*4//16), (width*12//16,height*7//16))
 #bezie((width*4//16,height*7//16), (width*3//16,height*14//16), (width*13//16,height*14//16), (width*12//16,height*7//16))
 #symbol
 bezie((width//2, height//8), (width//4, height//8), (width//4, height*5//8), (width*9//16, height*7//16))
