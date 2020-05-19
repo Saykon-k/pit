@@ -1,0 +1,8 @@
+#include "stdio.h"
+int main(){
+  int kol = 3;
+  int minim = 3;
+
+  printf("%d",kol+minim);
+  return 0;
+}

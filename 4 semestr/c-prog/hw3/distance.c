@@ -1,7 +1,8 @@
 #include "stdio.h"
 #include "math.h"
 int main() {
-  float x1,y1,x2,y2;
+  float y1,x2,y2;
+  int x1;
   scanf("%f" ,&x1);
   scanf("%f" ,&y1);
   scanf("%f" ,&x2);
