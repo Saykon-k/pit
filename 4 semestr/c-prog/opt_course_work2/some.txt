@@ -1,1 +1,6 @@
 https://docs.google.com/document/d/1lQCBkn2m8iZsrZs3DsfxvGvZhGq032W4fl1KVb5zwqg/edit
+Небольшая оптимизация оптимизации курсовой работы
+Выполнили:                          функция             github
+          Сайков Константин     - rand_children         https://github.com/Saykon-k
+          Эсмурзиев Алексей     - food_and_dead_after   https://github.com/AEsmur
+          Елизавета Колесник    - next_step
