@@ -51,7 +51,7 @@ def bezie(p0, p1, p2, p3):
 		oldBx = Bx
 		oldBy = By
 
-image = Image.open("/4 semestr/comp_grafic/labS/3_lab/files/roof_half.JPG") #Открываем изображение
+image = Image.open("/4 semestr/comp_grafic/labS/Lab_3_Inverse Parabolic Interpolation Method/files/roof_half.JPG") #Открываем изображение
 draw = ImageDraw.Draw(image) #Создаем инструмент для рисования
 width  = image.size[0] #Определяем ширину
 height = image.size[1] #Определяем высоту
@@ -80,5 +80,5 @@ bezie((width//2, height//8), (width//4, height//8), (width//4, height*5//8), (wi
 bezie((width//2, height//8), (width*3//4, height//8), (width*11//16, height*5//8), (width*7//16, height*3//4))
 bezie((width*9//16, height*7//16), (width*9//16, height*7//16), (width*9//16, height*9//16), (width*7//16, height*3//4))
 image.show()
-#image.save("F:/pit/4 semestr/comp_grafic/3_lab/files")
+#image.save("F:/pit/4 semestr/comp_grafic/Lab_3_Inverse Parabolic Interpolation Method/files")
 del draw

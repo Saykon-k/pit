@@ -2,7 +2,7 @@
 import random
 from PIL import Image, ImageDraw #Подключим необходимые библиотеки
 
-image = Image.open("/4 semestr/comp_grafic/labS/2_lab/files/bear.JPG") #Открываем изображение
+image = Image.open("/4 semestr/comp_grafic/labS/Lab_2_SLAU_ Iteration_Methods_1.2.4g/files/bear.JPG") #Открываем изображение
 draw = ImageDraw.Draw(image) #Создаем инструмент для рисования
 width  = image.size[0] #Определяем ширину 
 height = image.size[1] #Определяем высоту 	
