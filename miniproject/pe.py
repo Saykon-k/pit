@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import numpy as np
-vgm_url = 'http://www.rating.unecon.ru/index.php?&y=2018&k=1&f=1&up=12001&s=4&upp=all&sort=fio&ball=hide&g=all'
+vgm_url = 'http://www.rating.unecon.ru/index.php?&y=2018&k=1&f=1&up=12001&g=all&upp=all&sort=fio&ball=hide&s=2'
 html_text = requests.get(vgm_url).text
 soup = BeautifulSoup(html_text, 'html.parser')
 kol_subject = -1
@@ -21,10 +21,10 @@ if non_or_yes - kol_subject == 3:
     name_subject.insert(0, "номер")
     name_subject.insert(1, "ФИО")
 else:
+    name_subject = name_subject[5::]
     name_subject.insert(0,"номер")
     name_subject.insert(1,"ФИО")
     name_subject.insert(2,"№ группы")
-    name_subject = name_subject[5::]
 kol_subject+=2
 students = []
 for link in soup.find_all('tbody'):
@@ -35,6 +35,7 @@ for link in soup.find_all('tbody'):
         students.append(prom)
 students = np.array(students)
 all_students = np.split(students,len(students)/(len(name_subject)+1))
+print(name_subject)
 for i in all_students:
     if 	"Симененко Леонид Сергеевич" in i:
         print(i)
