@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import numpy as np
-def main(name_student):
+def main(name_student,link_real):
     vgm_url = 'http://www.rating.unecon.ru/index.php?&y=2018&k=1&f=1&up=12020&g=all&upp=all&sort=fio&ball=hide&s=4'
     html_text = requests.get(vgm_url).text
     soup = BeautifulSoup(html_text, 'html.parser')
@@ -47,3 +47,24 @@ def obrabotka(data_student,name_subject):
     for i in range(len(name_subject)):
         str += data_student[i] + " "+ name_subject[i] +"\n"
     return str
+#будем считать что человек пишет только номер курса
+def kurse_and_profile(number_kurse, name_spec ,numb):
+    vgm_url = 'http://www.rating.unecon.ru'
+    html_text = requests.get(vgm_url).text
+    soup = BeautifulSoup(html_text, 'html.parser')
+    data_students_kurse = {}
+    i = 0
+    for a in soup.find_all('a', href=True):
+        if i < 6:
+            data_students_kurse[a.get_text()] = 'http://www.rating.unecon.ru/' + a.get('href')
+        else:
+            break
+        i+=1
+    vgm_url = data_students_kurse.get(number_kurse+" курс")
+    html_text = requests.get(vgm_url).text
+    soup = BeautifulSoup(html_text, 'html.parser')
+    data_students_kurse.clear()
+    for a in soup.find_all('a', href=True):
+        data_students_kurse[a.get_text()] = 'http://www.rating.unecon.ru/' + a.get('href')
+    return data_students_kurse.get(name_spec)
+print(kurse_and_profile('2','Менеджмент',0))
