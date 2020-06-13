@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import numpy as np
 def main(name_student,link_real):
-    vgm_url = 'http://www.rating.unecon.ru/index.php?&y=2018&k=1&f=1&up=12020&g=all&upp=all&sort=fio&ball=hide&s=4'
+    vgm_url = link_real
     html_text = requests.get(vgm_url).text
     soup = BeautifulSoup(html_text, 'html.parser')
     kol_subject = -1
@@ -42,13 +42,14 @@ def main(name_student,link_real):
             return  obrabotka(i,name_subject)
     else:
         return "Такого пользователя нет в открытой базе данных"
+
 def obrabotka(data_student,name_subject):
     str = ''
     for i in range(len(name_subject)):
         str += data_student[i] + " "+ name_subject[i] +"\n"
     return str
 #будем считать что человек пишет только номер курса
-def kurse_and_profile(number_kurse, name_spec ,numb):
+def kurse_and_profile(number_kurse, name_spec ,numb,group):
     vgm_url = 'http://www.rating.unecon.ru'
     html_text = requests.get(vgm_url).text
     soup = BeautifulSoup(html_text, 'html.parser')
@@ -60,11 +61,27 @@ def kurse_and_profile(number_kurse, name_spec ,numb):
         else:
             break
         i+=1
+    #находим нужный курс
     vgm_url = data_students_kurse.get(number_kurse+" курс")
     html_text = requests.get(vgm_url).text
     soup = BeautifulSoup(html_text, 'html.parser')
     data_students_kurse.clear()
     for a in soup.find_all('a', href=True):
         data_students_kurse[a.get_text()] = 'http://www.rating.unecon.ru/' + a.get('href')
-    return data_students_kurse.get(name_spec)
-print(kurse_and_profile('2','Менеджмент',0))
+    #находим нужную специальность
+    vgm_url = data_students_kurse.get(name_spec)
+    html_text = requests.get(vgm_url).text
+    soup = BeautifulSoup(html_text, 'html.parser')
+    data_students_kurse.clear()
+    for a in soup.find_all('a', href=True):
+        data_students_kurse[a.get_text()] = 'http://www.rating.unecon.ru/' + a.get('href')
+    #выбираем семетр
+    vgm_url =data_students_kurse.get(numb+" семестр")
+    html_text = requests.get(vgm_url).text
+    soup = BeautifulSoup(html_text, 'html.parser')
+    data_students_kurse.clear()
+    for a in soup.find_all('a', href=True):
+        data_students_kurse[a.get_text()] = 'http://www.rating.unecon.ru/' + a.get('href')
+    #выбираем группу
+    return data_students_kurse.get(group)
+#print(kurse_and_profile('2','Менеджмент','2',"М-1801"))
