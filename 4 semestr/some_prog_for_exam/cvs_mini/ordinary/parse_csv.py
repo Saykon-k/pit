@@ -1,7 +1,6 @@
 import csv
 import meth_csv as meth
 with open ('name_csv.txt') as csv_file:
-    csv_reader = csv.reader(csv_file,delimiter = ',')
     meth.cvs_norm(csv_file)
     second = open('name_csv.txt', 'r')
     meth.csv_dict(second)
