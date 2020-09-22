@@ -42,9 +42,9 @@ def potrep_A_B_C(a,b):
     print('A = \n' + str(res))
     return [res,[x1,x2,x3]]
 print('Задание 1')
-k = fill_data('C:\\Users\\lenov\\Desktop\g.xlsx')
+k = fill_data('data_for_task1.xlsx')
 find_alfa_and_beta_and_A(k[0],k[1])
 print('\nЗадание 2')
-k = fill_data('C:\\Users\\lenov\\Desktop\Книга1.xlsx')
+k = fill_data('data_for_task2.xlsx')
 res = potrep_A_B_C(k[0],k[1])
 find_alfa_and_beta_and_A(res[0],k[1])
