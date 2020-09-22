@@ -21,8 +21,11 @@ def find_alfa_and_beta_and_A(data_coverted):
                       [data_converted[0],data_converted[2]]])
     matrV = np.array([[data_converted[1]],
                       [data_converted[3]]])
+    print(str(matrA)+" = " + str(matrV) )
+
     rever_matrA = np.linalg.inv(matrA)
     resualt  = rever_matrA.dot(matrV)
+
     print(rever_matrA)
     print()
     print(matrV)
