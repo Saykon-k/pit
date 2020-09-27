@@ -1,3 +1,3 @@
 F:
 cd F:\pit\5 semestr\opt_met
-jupyterlab notebook
+jupyter notebook
