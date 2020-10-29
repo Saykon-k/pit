@@ -13,4 +13,11 @@ _Navigation in this repository_
   
   * c-prog - basic tasks for beginner C developer(has been created module for python)
   * comp_grafic - basic tasks for beginner 3d modeling and work with vector and raster graphic
- * 4_semester
+ * 5_semester
+ 
+   * mat modeling - description of a system using mathematical concepts and language
+   * opt_met -(method of optimization) decision most of classic problem optimization python language 
+As Kanye West said:
+
+> We're living the future so
+> the present is our past.
