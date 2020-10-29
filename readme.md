@@ -17,7 +17,3 @@ _Navigation in this repository_
  
    * mat modeling - description of a system using mathematical concepts and language
    * opt_met -(method of optimization) decision most of classic problem optimization python language 
-As Kanye West said:
-
-> We're living the future so
-> the present is our past.
