@@ -1,5 +1,5 @@
 # This repository contain some tasks from university
-_Navigation in this repository_
+_Navigation of this repository_
 * 2&&3 semester:
   * homework - basic tasks for beginner python developer
   * 1_course_work - recreated tetris on wolfram language with some addition
