@@ -1,5 +1,5 @@
 # This repository contain some tasks from university
-_Navigation of this repository_
+_Navigation of  this repository_
 * 2&&3 semester:
   * homework - basic tasks for beginner python developer
   * 1_course_work - recreated tetris on wolfram language with some addition
@@ -16,4 +16,5 @@ _Navigation of this repository_
  * 5_semester
  
    * mat modeling - description of a system using mathematical concepts and language
+   
    * opt_met -(method of optimization) decision most of classic problem optimization python language 
