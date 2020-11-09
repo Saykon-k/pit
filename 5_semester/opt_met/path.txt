@@ -1,3 +1,6 @@
 F:
 cd F:\pit\5_semestr\opt_met
 jupyter notebook
+
+           tex
+latexmk -pdf HelloWorld_1.tex
