@@ -30,8 +30,8 @@ def koef_val(matrix,vect):
 
     for i in range(len(koef_val)):
         vect[i] *= koef_val[i]
-
     vect = np.array(vect)
+    print(vect)
     resual = matrix.dot(vect)
 
     print('\nС коэффициентами:')
