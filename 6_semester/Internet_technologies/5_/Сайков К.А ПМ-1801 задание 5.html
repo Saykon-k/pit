@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Задание 5</title>
+        <style>
+            .circle{
+
+				background: green;
+
+				width: 300px;
+				height: 300px;
+
+                position: absolute;
+            	top:0;
+            	bottom: 0;
+            	left: 0;
+            	right: 0;
+            	margin: auto;
+
+				border-radius: 2000%;
+				transition: all 2.6s;
+
+			}
+            .circle :first-child{
+
+                background: yellow;
+
+				width: 150px;
+				height: 150px;
+			}
+            .circle:hover{
+				transform: scale(2);
+			}
+        </style>
+    </head>
+    <body>
+    <h1 align="center">Задание "круги"</h1>
+        <div class="circle">
+            <div class="circle">
+            </div>
+        </div>
+    </body>
+</html>
