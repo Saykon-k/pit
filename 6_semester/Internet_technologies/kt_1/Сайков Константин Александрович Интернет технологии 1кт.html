@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .wrapper {
+      width: 550px;
+      height: 450px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-left: 15px;
+      padding-right: 15px;
+      background-color: yellow;
+      position: relative;
+    }
+
+    .wrapper:hover {
+      cursor: pointer;
+
+    }
+
+    .wrapper:hover .first {
+      transform: scale(1.05);
+    }
+
+    .wrapper:hover .second {
+      background-color: blue;
+    }
+
+    .square {
+      width: 90px;
+      height: 90px;
+      background-color: green;
+      border: 5px solid red;
+    }
+
+    .square.rounded {
+      border-radius: 15px;
+    }
+
+    .square.first {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transition: transform 2s linear;
+    }
+
+    .square.second {
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: background-color 2s linear;
+    }
+
+    .selected {
+      border-color: aqua;
+    }
+  </style>
+
+  <title>Сайков Константин Александрович</title>
+</head>
+<body>
+<h1>Сайков Константин</h1>
+<div class="wrapper">
+  <div class="square first"></div>
+  <div class="square second rounded"></div>
+</div>
+<button type="button" id="add">Добавить</button>
+
+<script>
+  function roundedSquareListener(event) {
+    if (event.target.classList.contains('selected')) {
+      event.target.classList.remove('selected');
+    } else {
+      event.target.classList.add('selected');
+    }
+  }
+
+  function updateRoundedSquare() {
+    var roundedSquare = document.querySelectorAll('.square.rounded');
+
+    roundedSquare.forEach(function (item) {
+      item.removeEventListener('click', roundedSquareListener);
+      item.addEventListener('click', roundedSquareListener);
+    });
+  }
+
+  updateRoundedSquare();
+
+  var addButton = document.getElementById('add');
+  var wrapper = document.querySelector('.wrapper');
+
+  function createRoundedSquare() {
+    var square = document.createElement('div');
+    square.classList.add('square', 'rounded');
+    return square;
+  }
+
+  addButton.addEventListener('click', function () {
+    wrapper.appendChild(createRoundedSquare());
+    updateRoundedSquare();
+  });
+</script>
+</body>
+</html>
