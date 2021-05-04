@@ -55,19 +55,18 @@ def determite_work(connection_from_user):
 
 def find_t_and_T(connection_from_user, ranked_info, info_about_work):
     prom_info_date = []
-    dict_info_mini_t = {}
-    dict_info_big_T = {}
+    dict_info_t = {}
     k = 0
     for i in ranked_info.values():
         prom_info = []
         for j in i:
             if connection_from_user[j][0] == -1:
-                dict_info_mini_t[f't_{k}'] = info_about_work[j]
-                dict_info_big_T[f'T_{k}'] = info_about_work[j]
+                dict_info_t[f't_{k}'] = info_about_work[j]
+                dict_info_t[f'T_{k}'] = info_about_work[j]
                 k +=1
             else:
-                dict_info_mini_t[f't_{k}'] = info_about_work[j]
-                prom_list = [dict_info_big_T.get(f'T_{i}') for i in connection_from_user[j]]
+                dict_info_t[f't_{k}'] = info_about_work[j]
+                prom_list = [dict_info_t.get(f'T_{i}') for i in connection_from_user[j]]
                 # # for i in connection_from_user:
                 # if f'T_{k}' == 'T_11':
                 #     print('------')
@@ -75,28 +74,53 @@ def find_t_and_T(connection_from_user, ranked_info, info_about_work):
                 #     print(connection_from_user[j])
                 #     print(prom_list)
                 #     print('------')
-                dict_info_big_T[f'T_{k}'] = info_about_work[j] + max(prom_list)
-                prom_info.append(max([info_about_work[i] for i in connection_from_user[j]]) + info_about_work[j])
+                dict_info_t[f'T_{k}'] = info_about_work[j] + max(prom_list)
                 k += 1
         prom_info_date.append(copy.deepcopy(prom_info))
         prom_info.clear()
     # print(dict_info_big_T)
     # print(dict_info_mini_t)
-    return [dict_info_mini_t, dict_info_big_T]
+    print(dict_info_t)
+    return dict_info_t
 
-def find_max_path(connection_from_user, info_about_T, info_):
+def find_max_key(info_about_T):
     max_path = -1
     key_max = -1
-    for i, j in info_about_t_and_T.items():
+    for i, j in info_about_T.items():
         if j > max_path:
             max_path = j
             key_max = i
-    print(key_max)
+    return key_max
+
+def find_max_path(connection_from_user, info_about_T):
+   key_max = find_max_key(info_about_T)
+   value_to_next = int(key_max.split('_')[1])
+   prom_path = [value_to_next]
+
+   while connection_from_user[value_to_next][0] != -1:
+        prom = [[i, info_about_T.get(f'T_{i}')] for i in connection_from_user[value_to_next]]
+        max_element = -1
+        number_info = -1
+        for i in prom:
+            if i[1] > max_element:
+                max_element = i[1]
+                number_info = i[0]
+        prom_path.append(number_info)
+        value_to_next = number_info
+
+   return prom_path
+   #      print('-----')
+   #      print(connection_from_user[value_to_next])
+   #
+   #      print('-----')
+   #
+   # print(prom_path)
 
 def main(connection_from_user, info_about_work):
     ranked_info = determite_work(connection_from_user)
-    print('find_max_path')
+    print('info_about_t_and_T')
     info_about_t_and_T = find_t_and_T(connection_from_user, ranked_info, info_about_work)
+    print('find_max_path')
     find_max_path(connection_from_user, info_about_t_and_T)
 
 
