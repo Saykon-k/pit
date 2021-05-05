@@ -1,4 +1,6 @@
 import copy
+import cvxpy
+import math
 # кароч 1 связи, которые проставил пользователь ниже функция пример
 # выходной список - список индексов, по которым нужно будет строить граф - учебник фрола - сошлось - ок
 def determite_work(connection_from_user):
@@ -108,23 +110,50 @@ def find_max_path(connection_from_user, info_about_T):
         prom_path.append(number_info)
         value_to_next = number_info
 
-   return prom_path
+   return [prom_path, key_max]
    #      print('-----')
    #      print(connection_from_user[value_to_next])
    #
    #      print('-----')
    #
    # print(prom_path)
-
-def main(connection_from_user, info_about_work):
+def deterimate_all_alfa():
+    #пока неизвестно, как это сделать
+    return [0.1, 0.2, 0.05]
+# def opt_1_without_change_max_path()
+def main(connection_from_user, info_about_work, minimum_term_mass, dead_line_all_projects,money):
     ranked_info = determite_work(connection_from_user)
     print('info_about_t_and_T')
     info_about_t_and_T = find_t_and_T(connection_from_user, ranked_info, info_about_work)
     print('find_max_path')
-    find_max_path(connection_from_user, info_about_t_and_T)
+    path_max = find_max_path(connection_from_user, info_about_t_and_T)
+    print(path_max)
 
-
+#
 # main([[-1],[0,2],[-1],[0,1,2],[-1],[-1],[0,3,9],[0,1],[2,3,4],[8],[6,11],[0,1],[3,4,9],[2,3,4],[9],[6]],
 #                [10, 5, 15, 10, 30, 5, 15, 25, 15, 30, 35, 10])
-main([[-1], [-1], [-1], [0, 1], [1, 2], [1, 3], [2, 4], [3, 4], [6], [5, 7], [8, 9], [9]],
-     [10, 5, 15, 10, 30, 5, 15, 25, 15, 30, 35, 10])
+# main([[-1], [-1], [-1], [0, 1], [1, 2], [1, 3], [2, 4], [3, 4], [6], [5, 7], [8, 9], [9]],
+#      [10, 5, 15, 10, 30, 5, 15, 25, 15, 30, 35, 10])
+# main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2], [5],[3,4,6]],
+#      [20, 10, 5, 30, 10, 15, 10, 10],
+#      [15, 5, 5, 10, 5, 10, 5, 5],
+#      35,
+#      10
+#      )
+main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2], [5],[3,4,6]],
+     [15, 10, 5, 10, 10, 15, 10, 5],
+     [15, 5, 5, 10, 5, 10, 5, 5],
+     35,
+     10
+     )
+# [[-1], [-1], [-1], [0, 1], [0, 1, 2], [0, 1, 2], [5], [3, 4, 6]]
+# [[0, 1], [0, 1, 2], [0, 1, 2], [5], [3, 4, 6]]
+# [3, 4, 5, 6, 7]
+# -1 -> {0, 1, 2}
+# 0 -> {3, 4, 5}
+# 1 -> {6}
+# 2 -> {7}
+# info_about_t_and_T
+# {'t_0': 20, 'T_0': 20, 't_1': 10, 'T_1': 10, 't_2': 5, 'T_2': 5, 't_3': 30, 'T_3': 50, 't_4': 10, 'T_4': 30, 't_5': 15, 'T_5': 35, 't_6': 10, 'T_6': 45, 't_7': 10, 'T_7': 60}
+# find_max_path
+# [[7, 3, 0], 'T_7']
