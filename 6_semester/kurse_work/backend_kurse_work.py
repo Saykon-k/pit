@@ -1,4 +1,7 @@
 import copy
+import cvxpy as cp
+import numpy as np
+import math
 # кароч 1 связи, которые проставил пользователь ниже функция пример
 # выходной список - список индексов, по которым нужно будет строить граф - учебник фрола - сошлось - ок
 def determite_work(connection_from_user):
@@ -66,14 +69,14 @@ def find_t_and_T(connection_from_user, ranked_info, info_about_work):
                 dict_info_t[f'T_{j}'] = info_about_work[j]
                 k += 1
             else:
-                print('---------')
-                print(i)
-                print(j)
-                print(dict_info_t)
-                print(connection_from_user[j])
+                # print('---------')
+                # print(i)
+                # print(j)
+                # print(dict_info_t)
+                # print(connection_from_user[j])
                 dict_info_t[f't_{k}'] = info_about_work[j]
                 prom_list = [dict_info_t.get(f'T_{i}') for i in connection_from_user[j]]
-                print('---------')
+                # print('---------')
 
                 # # for i in connection_from_user:
                 # if f'T_{k}' == 'T_11':
@@ -123,17 +126,137 @@ def find_max_path(connection_from_user, info_about_T):
    #      print('-----')
    #
    # print(prom_path)
+from math import ceil, floor
+def opt_v1_without_change_path(connection_from_user, ranked_info, info_about_work,info_about_faster_work, max_path, alfa, money, max_user_time):
+    dict_values = {}
+    # x = cp.Variable()
+    print(max_path)
+    constraints = []
+    for i in max_path:
+        dict_values[f'x_{i}'] = cp.Variable()
+        constraints.append(info_about_work[i]*(1-alfa[i]*dict_values.get(f'x_{i}'))>= info_about_faster_work[i])
 
-def main(connection_from_user, info_about_work):
+    # constraints = [x  < 10]
+
+    # constraints = [dict_values.get(f'x_{7}')]
+    # print(constraints)
+    # # print(alfa)
+    # print([info_about_work[i] for i in max_path])
+    # # print([dict_values.get(f'x_{i}') * 1 < 10 for i in max_path])
+    #
+    constraints.append(sum([info_about_work[i]*(1-alfa[i]*dict_values.get(f'x_{i}')) for i in max_path]) <= max_user_time)
+    constraints.append(sum([ dict_values.get(f'x_{i}') for i in max_path]) <= money)
+
+    for i in max_path:
+        constraints.append(dict_values.get(f'x_{i}') >= 0)
+    # print('\ncontains')
+    # for i in range(len(constraints)):
+    #
+    #     print(str(constraints[i]))
+    # print('contains\n')
+
+    # for i in max_path:
+    #     prom =
+    #
+    obj = cp.Minimize(sum([dict_values.get(f'x_{i}') for i in max_path]))
+    #
+    prob = cp.Problem(obj, constraints)
+    #
+    prob.solve()
+    print("status:", prob.status)
+    if str(prob.status) == 'optimal':
+        print("optimal val:", np.round(prob.value, 5))
+
+        for i in max_path:
+            print("optimal var {0}: (floor){1}\n".format( f'x_{i}', round(float(dict_values.get(f'x_{i}').value), 3)))
+            # print(np.round(dict_values.get(f'x_{i}').value),3)
+
+            # float_round(0.21111, 3, round)
+            print(round(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}').value),2))
+
+    else:
+        print('tet')
+        return -404
+def opt_v2_max_mathematic_model(connection_from_user, ranked_info,
+                                info_about_work,info_about_faster_work,
+                                max_path, alfa, money,
+                                max_user_time,info_about_t_and_T):
+
+    dict_values = {}
+    # x = cp.Variable()
+    print(ranked_info)
+    constraints = []
+    for i in range(len(connection_from_user)):
+        dict_values[f'x_{i}'] = cp.Variable()
+        constraints.append(info_about_work[i]*(1-alfa[i]*dict_values.get(f'x_{i}'))>= info_about_faster_work[i])
+
+    for i, j in ranked_info.items():
+        if i == -1:
+            pass
+        else:
+            for i_1 in ranked_info.get(i):
+                for i_2 in connection_from_user[i_1]:
+                    print(i_2)
+                    constraints.append(info_about_t_and_T.get(f't_{i_1}'))
+
+                    # constraints.append(ranked_info[i_2]*(1-alfa[i_2]))
+                    if i == 0:
+                        constraints.append(info_about_t_and_T.get(f'T_{i_1}') >= info_about_work[i_2]*(1-alfa[i_2]*dict_values.get(f'x_{i_2}')))
+                    else:
+                        constraints.append(info_about_t_and_T.get(f'T_{i_1}') >=info_about_t_and_T.get(f'T_{i_2}') + info_about_work[i_2]*(1-alfa[i_2]*dict_values.get(f'x_{i_2}')))
+
+    for i in range(len(connection_from_user)):
+        constraints.append(max_user_time>= info_about_t_and_T.get(f'T_{i}') + info_about_work[i]*(1-alfa[i]*dict_values.get(f'x_{i}')))
+
+    for i in range(len(connection_from_user)):
+        constraints.append(dict_values.get(f'x_{i}') >= 0)
+
+    constraints.append(sum(list(dict_values.values()))<= money)
+
+    print('\ncontains')
+    for i in range(len(constraints)):
+
+        print(str(constraints[i]))
+    print('contains\n')
+    # print(sum([dict_values.get(f'x_{i}') for i in range(len(connection_from_user))]))
+    obj = cp.Minimize(sum([dict_values.get(f'x_{i}') for i in range(len(connection_from_user))]))
+    #
+    prob = cp.Problem(obj, constraints)
+    #
+    prob.solve()
+    print("status:", prob.status)
+    for i in range(len(constraints)):
+        print(constraints[i])
+        print()
+    print('contains\n')
+
+
+        # dict_values[f'x_{i}'] = cp.Variable()
+        # constraints.append(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}')) >= info_about_faster_work[i])
+
+def main(connection_from_user, info_about_work, info_about_faster_work, alfa, money, max_user_time):
     ranked_info = determite_work(connection_from_user)
     print('info_about_t_and_T')
     info_about_t_and_T = find_t_and_T(connection_from_user, ranked_info, info_about_work)
     print('find_max_path')
     max_path = find_max_path(connection_from_user, info_about_t_and_T)
-    print(max_path)
+    opt_v1_without_change_path(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time)
+    opt_v2_max_mathematic_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
 
 
 # main([[-1], [-1], [-1], [0, 1], [1, 2], [1, 3], [2, 4], [3, 4], [6], [5, 7], [8, 9], [9]],
 #      [10, 5, 15, 10, 30, 5, 15, 25, 15, 30, 35, 10])
-main([[-1],[-1],[-1],[0],[0],[2],[1, 4, 5], [1, 4, 5],[3, 6], [2], [1, 3, 5,9]],
-     [8, 10, 6, 9, 5, 2, 4, 13, 8, 17, 10])
+# main([[-1],[-1],[-1],[0],[0],[2],[1, 4, 5], [1, 4, 5],[3, 6], [2], [1, 3, 5,9]],
+#      [8, 10, 6, 9, 5, 2, 4, 13, 8, 17, 10])
+# main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2],[5],[3,4,6]],
+#      [20, 10, 5, 30, 10, 15, 10, 10],
+#      [15, 5, 5, 10, 5, 10, 3, 3],
+#      [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
+#      10,
+#      35)
+main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2],[5],[3,4,6]],
+     [20, 10, 5, 30, 10, 15, 10, 10],
+     [15, 5, 5, 10, 5, 10, 3, 5],
+     [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
+     10,
+     35)
