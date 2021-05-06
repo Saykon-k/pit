@@ -14,6 +14,7 @@ def determite_work(connection_from_user):
         else:
             not_none_index.append(i)
     print([connection_from_user[i] for i in not_none_index])
+
     # print(not_none_index)
     set_insected = set()
     prom = []
