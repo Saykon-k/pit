@@ -1,6 +1,8 @@
 import copy
-import cvxpy
+import cvxpy as cp
+import numpy as np
 import math
+import ast
 # кароч 1 связи, которые проставил пользователь ниже функция пример
 # выходной список - список индексов, по которым нужно будет строить граф - учебник фрола - сошлось - ок
 def determite_work(connection_from_user):
@@ -119,7 +121,21 @@ def find_max_path(connection_from_user, info_about_T):
    # print(prom_path)
 def deterimate_all_alfa():
     #пока неизвестно, как это сделать
-    return [0.1, 0.2, 0.05]
+    return [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1]
+
+def find_needed_path(connection_from_user,info_about_work,minimum_term_mass,dead_line_all_projects,money,ranked_info,info_about_t_and_T,alfa_all):
+
+    ast.literal_eval('1')
+    prom = []
+    print(info_about_t_and_T)
+    # for i in info_about_t_and_T:
+
+    #     x1 = cp.Variable()
+    # x2 = cp.Variable()
+    # x3 = cp.Variable()
+
+
+
 # def opt_1_without_change_max_path()
 def main(connection_from_user, info_about_work, minimum_term_mass, dead_line_all_projects,money):
     ranked_info = determite_work(connection_from_user)
@@ -128,6 +144,9 @@ def main(connection_from_user, info_about_work, minimum_term_mass, dead_line_all
     print('find_max_path')
     path_max = find_max_path(connection_from_user, info_about_t_and_T)
     print(path_max)
+
+    alfa_all = deterimate_all_alfa()
+    find_needed_path(connection_from_user,info_about_work,minimum_term_mass,dead_line_all_projects,money,ranked_info,info_about_t_and_T,alfa_all)
 
 #
 # main([[-1],[0,2],[-1],[0,1,2],[-1],[-1],[0,3,9],[0,1],[2,3,4],[8],[6,11],[0,1],[3,4,9],[2,3,4],[9],[6]],
@@ -141,8 +160,8 @@ def main(connection_from_user, info_about_work, minimum_term_mass, dead_line_all
 #      10
 #      )
 main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2], [5],[3,4,6]],
-     [15, 10, 5, 10, 10, 15, 10, 5],
-     [15, 5, 5, 10, 5, 10, 5, 5],
+     [20, 10, 5, 30, 10, 15, 10, 10],
+     [15, 5, 5, 10, 5, 10, 3, 3],
      35,
      10
      )
