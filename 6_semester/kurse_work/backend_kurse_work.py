@@ -134,6 +134,7 @@ def opt_v1_without_change_path(connection_from_user, ranked_info, info_about_wor
     constraints = []
     for i in max_path:
         dict_values[f'x_{i}'] = cp.Variable()
+
         constraints.append(info_about_work[i]*(1-alfa[i]*dict_values.get(f'x_{i}'))>= info_about_faster_work[i])
 
     # constraints = [x  < 10]
@@ -188,47 +189,106 @@ def opt_v2_max_mathematic_model(connection_from_user, ranked_info,
     constraints = []
     for i in range(len(connection_from_user)):
         dict_values[f'x_{i}'] = cp.Variable()
-        constraints.append(info_about_work[i]*(1-alfa[i]*dict_values.get(f'x_{i}'))>= info_about_faster_work[i])
-
+        constraints.append(info_about_work[i]*(1-alfa[i]*dict_values.get(f'x_{i}')) >= info_about_faster_work[i])
+    k = 0
+    print('\ncontains')
+    for i in range(len(constraints)):
+        print(str(constraints[i]))
+        k+=1
+    print('contains\n')
     for i, j in ranked_info.items():
         if i == -1:
             pass
+            # for i_1 in ranked_info.get(i):
+            #     constraints.append(info_about_work[i_1]*(1-alfa[i_1]*dict_values.get(f'x_{i_1}')) == info_about_t_and_T.get(f'T_{i_1}'))
         else:
             for i_1 in ranked_info.get(i):
                 for i_2 in connection_from_user[i_1]:
                     print(i_2)
-                    constraints.append(info_about_t_and_T.get(f't_{i_1}'))
+                    # constraints.append(info_about_t_and_T.get(f't_{i_1}'))
 
                     # constraints.append(ranked_info[i_2]*(1-alfa[i_2]))
                     if i == 0:
-                        constraints.append(info_about_t_and_T.get(f'T_{i_1}') >= info_about_work[i_2]*(1-alfa[i_2]*dict_values.get(f'x_{i_2}')))
+                        constraints.append(info_about_t_and_T.get(f'T_{i_1}') - info_about_work[i_1] >=
+                                           info_about_work[i_2]*(1-alfa[i_2]*dict_values.get(f'x_{i_2}')))
                     else:
-                        constraints.append(info_about_t_and_T.get(f'T_{i_1}') >=info_about_t_and_T.get(f'T_{i_2}') + info_about_work[i_2]*(1-alfa[i_2]*dict_values.get(f'x_{i_2}')))
+                        constraints.append(info_about_t_and_T.get(f'T_{i_1}') - info_about_work[i_1] >=
+                                           (info_about_t_and_T.get(f'T_{i_2}') - info_about_work[i_2]) + info_about_work[i_2]*(1-alfa[i_2]*dict_values.get(f'x_{i_2}')))
 
-    for i in range(len(connection_from_user)):
-        constraints.append(max_user_time>= info_about_t_and_T.get(f'T_{i}') + info_about_work[i]*(1-alfa[i]*dict_values.get(f'x_{i}')))
+    print('\ncontains-1')
+    for i in constraints[k:]:
+        print(str(i))
+        k += 1
+    print('contains\n')
+    #
+    print(max_user_time)
+    for i in range(0, len(connection_from_user)-3, 1):
+        constraints.append(max_user_time >= (info_about_t_and_T.get(f'T_{i}') - info_about_work[i]) + info_about_work[i]*(1-alfa[i]*dict_values.get(f'x_{i}')))
 
+
+
+    print('\ncontains - 2 ')
+    for i in constraints[k:]:
+        print(str(i))
+        k += 1
+    print('contains\n')
     for i in range(len(connection_from_user)):
         constraints.append(dict_values.get(f'x_{i}') >= 0)
+    #
+    #
+    constraints.append(sum(list(dict_values.values())) <= money)
 
-    constraints.append(sum(list(dict_values.values()))<= money)
+    # print('contains\n')
+    # print(constraints[-1])
 
-    print('\ncontains')
-    for i in range(len(constraints)):
 
-        print(str(constraints[i]))
-    print('contains\n')
-    # print(sum([dict_values.get(f'x_{i}') for i in range(len(connection_from_user))]))
+    # print('\ncontains')
+    # for i in range(len(constraints)):
+    #
+    #     print(str(constraints[i]))
+    # print('contains\n')
+    # for i in range(len(connection_from_user)):
+    #     constraints.append(dict_values.get(f'x_{i}') == 0)
+        # print(sum([dict_values.get(f'x_{i}') for i in range(len(connection_from_user))]))
+
     obj = cp.Minimize(sum([dict_values.get(f'x_{i}') for i in range(len(connection_from_user))]))
+
+    # obj = cp.Maximize(sum([dict_values.get(f'x_{i}') for i in range(len(connection_from_user[4:]))]))
+
     #
     prob = cp.Problem(obj, constraints)
     #
     prob.solve()
     print("status:", prob.status)
-    for i in range(len(constraints)):
-        print(constraints[i])
-        print()
-    print('contains\n')
+    print("optimal val:", np.round(prob.value, 5))
+    k = 0
+    for i in range(len(connection_from_user)):
+        print(f'x_{i}', round(float(dict_values.get(f'x_{i}').value),3))
+        k += dict_values.get(f'x_{i}').value
+    print(k)
+    print()
+    obj = cp.Maximize(sum([dict_values.get(f'x_{i}') for i in range(len(connection_from_user))]))
+
+    prob = cp.Problem(obj, constraints)
+    #
+    prob.solve()
+    print("status:", prob.status)
+    print("optimal val:", np.round(prob.value, 5))
+    k = 0
+    for i in range(len(connection_from_user)):
+        print(f'x_{i}',  round(float(dict_values.get(f'x_{i}').value),3))
+        k += dict_values.get(f'x_{i}').value
+    print(k)
+        # print("optimal var {0}: (floor){1}\n".format(f'x_{i}', dict_values.get(f'x_{i}').value))
+        # print(np.round(dict_values.get(f'x_{i}').value),3)
+
+        # float_round(0.21111, 3, round)
+        # print(round(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}').value), 2))
+
+    # for i in range(len(constraints)):
+    #     print(constraints[i])
+    #     print()
+    # print('contains\n')
 
 
         # dict_values[f'x_{i}'] = cp.Variable()
@@ -243,9 +303,15 @@ def main(connection_from_user, info_about_work, info_about_faster_work, alfa, mo
     opt_v1_without_change_path(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time)
     opt_v2_max_mathematic_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
 
-
+# пример из начала - то, что он дает на первом методе - ок (не было еще параметров)
 # main([[-1], [-1], [-1], [0, 1], [1, 2], [1, 3], [2, 4], [3, 4], [6], [5, 7], [8, 9], [9]],
-#      [10, 5, 15, 10, 30, 5, 15, 25, 15, 30, 35, 10])
+#      [10, 5, 15, 10, 30, 5, 15, 25, 15, 30, 35, 10],
+#      [15, 5, 5, 10, 5, 10, 3, 5],
+#           [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
+#           60,
+#           32
+#      )
+#да.
 # main([[-1],[-1],[-1],[0],[0],[2],[1, 4, 5], [1, 4, 5],[3, 6], [2], [1, 3, 5,9]],
 #      [8, 10, 6, 9, 5, 2, 4, 13, 8, 17, 10])
 # main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2],[5],[3,4,6]],
@@ -256,7 +322,7 @@ def main(connection_from_user, info_about_work, info_about_faster_work, alfa, mo
 #      35)
 main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2],[5],[3,4,6]],
      [20, 10, 5, 30, 10, 15, 10, 10],
-     [15, 5, 5, 10, 5, 10, 3, 5],
+     [15, 5, 5, 10, 5, 10, 3, 3],
      [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
-     10,
-     35)
+     60,
+     32)
