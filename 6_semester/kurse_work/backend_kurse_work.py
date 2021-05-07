@@ -385,10 +385,10 @@ def opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, i
         constraints.append(dict_values.get(f'T_k') >= dict_values.get(f't_{i}') + info_about_work[i] * (
                     1 - alfa[i] * dict_values.get(f'x_{i}')))
     # print()
-    for i in range(len(connection_from_user)):
-        print(f"{info_about_work[i]}*(1-{alfa[i]}*x{i+1}) >= {info_about_faster_work[i]},")
-
-        constraints.append(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}')) >= info_about_faster_work[i])
+    # for i in range(len(connection_from_user)):
+    #     print(f"{info_about_work[i]}*(1-{alfa[i]}*x{i+1}) >= {info_about_faster_work[i]},")
+    #
+    #     constraints.append(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}')) >= info_about_faster_work[i])
 
     constraints.append(dict_values.get(f'T_k') == max_user_time)
 
@@ -407,6 +407,7 @@ def opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, i
             print(f'x_{i}', round(float(dict_values.get(f'x_{i}').value), 3))
             k += dict_values.get(f'x_{i}').value
         print(k)
+
 def main(connection_from_user, info_about_work, info_about_faster_work, alfa, money, max_user_time):
     ranked_info = determite_work(connection_from_user)
     print('info_about_t_and_T')
@@ -448,5 +449,13 @@ main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2],[5],[3,4,6]],
      [20, 10, 5, 30, 10, 15, 10, 10],
      [15, 5, 5, 10, 5, 10, 3, 3],
      [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
-     60,
+     80,
      32)
+
+#опт_v7
+main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2],[5],[3,4,6]],
+     [20, 10, 5, 30, 10, 15, 10, 10],
+     [15, 5, 5, 10, 5, 10, 3, 3],
+     [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
+     80,
+     80)
