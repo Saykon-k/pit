@@ -74,7 +74,7 @@ def find_t_and_T(connection_from_user, ranked_info, info_about_work):
                 # print(j)
                 # print(dict_info_t)
                 # print(connection_from_user[j])
-                dict_info_t[f't_{k}'] = info_about_work[j]
+                dict_info_t[f't_{j}'] = info_about_work[j]
                 prom_list = [dict_info_t.get(f'T_{i}') for i in connection_from_user[j]]
                 # print('---------')
 
@@ -262,18 +262,68 @@ def find_connection_for_opt_v3(connection_from_user, ranked_info, info_about_wor
     for i, j in dict_paths.items():
         print(i,'->',j)
 
-#неготово.
-def opt_v3_without_change_path(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time,info_about_t_and_T):
-    dict_values = {}
-    # x = cp.Variable()
-    # print(ranked_info)
-    constraints = []
-    for i in range(len(connection_from_user)):
-        dict_values[f'x_{i}'] = cp.Variable()
-        dict_values[f't_{i}'] = cp.Variable()
-        constraints.append(dict_values.get(f'x_{i}') >= 0)
-    dict_values[f'T_k'] = cp.Variable()
-    find_connection_for_opt_v3(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time,info_about_t_and_T)
+def find_all_paths_T(connection_from_user, ranked_info, info_about_work):
+    prom_info_date = []
+    dict_info_t = {}
+    k = 0
+
+    for i in ranked_info.values():
+        prom_info = []
+        prom_list_2 = []
+        for j in i:
+            if connection_from_user[j][0] == -1:
+
+                dict_info_t[f't_{j}'] = [info_about_work[j], [j]]
+                dict_info_t[f'T_{j}'] = [info_about_work[j], [j]]
+                k += 1
+            else:
+                # print('---------')
+                # print(i)
+                # print(j)
+                # print(dict_info_t)
+                # print(connection_from_user[j])
+                # print([i for i in connection_from_user[j]])
+                prom_list_2 = []
+                for i in connection_from_user[j]:
+                    for x in dict_info_t.get(f'T_{i}')[1]:
+                        prom_list_2.append(x)
+
+                # print([x for x in dict_info_t.get(f'T_{i}') for i in connection_from_user[j]])
+                dict_info_t[f't_{j}'] = [info_about_work[j], [j]]
+                prom_list = [dict_info_t.get(f'T_{i}')[0] for i in connection_from_user[j]]
+                #
+                # print(prom_list_2)
+                # print('---------')
+
+                # # for i in connection_from_user:
+                # if f'T_{k}' == 'T_11':
+                #     print('------')
+                #     print(dict_info_mini_t)
+                #     print(connection_from_user[j])
+                #     print(prom_list)
+                #     print('------')
+                prom_list_2.append(j)
+                dict_info_t[f'T_{j}'] = [info_about_work[j] + max(prom_list), copy.deepcopy(prom_list_2)]
+                k += 1
+        prom_list_2.clear()
+        prom_info_date.append(copy.deepcopy(prom_info))
+        prom_info.clear()
+    # print(dict_info_big_T)
+    # print(dict_info_mini_t)
+    for i, j in dict_info_t.items():
+        if 'T' in i:
+            # print(i,'->', set(j[1]))
+            dict_info_t[i] = [j[0], set(j[1])]
+    print(dict_info_t)
+    return dict_info_t
+
+
+        # prom = sum([ranked_info[x] for x in j_1 for j_1 in info_about_t_and_T.get(f'T_{i}')])
+        # print(prom)
+
+        # for i_1, j_1 in info_about_t_and_T.items():
+        #     if
+
 
 def opt_v4_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time,info_about_t_and_T):
     dict_values = {}
@@ -419,8 +469,6 @@ def main(connection_from_user, info_about_work, info_about_faster_work, alfa, mo
     opt_v1_without_change_path(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time)
     print('opt2')
     opt_v2_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
-    print('opt3')
-    opt_v3_without_change_path(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
     print('opt4')
 
     opt_v4_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
@@ -445,17 +493,17 @@ def main(connection_from_user, info_about_work, info_about_faster_work, alfa, mo
 #      [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
 #      10,
 #      35)
-main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2],[5],[3,4,6]],
-     [20, 10, 5, 30, 10, 15, 10, 10],
-     [15, 5, 5, 10, 5, 10, 3, 3],
-     [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
-     80,
-     32)
+# main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2],[5],[3,4,6]],
+#      [20, 10, 5, 30, 10, 15, 10, 10],
+#      [15, 5, 5, 10, 5, 10, 3, 3],
+#      [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
+#      80,
+#      32)
 
 #опт_v7
 main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2],[5],[3,4,6]],
      [20, 10, 5, 30, 10, 15, 10, 10],
-     [15, 5, 5, 10, 5, 10, 3, 3],
-     [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
+     [15, 5, 5, 10, 5, 10, 3, 3,10],
+     [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1,0.2],
      80,
      80)
