@@ -11,6 +11,8 @@ from networkx.readwrite import json_graph
 from networkx.drawing.nx_agraph import write_dot, graphviz_layout
 import matplotlib.pyplot as plt
 import pylab
+from openpyxl.styles import Color, Fill,Font,PatternFill,Alignment
+
 # кароч 1 связи, которые проставил пользователь ниже функция пример
 # выходной список - список индексов, по которым нужно будет строить граф - учебник фрола - сошлось - ок
 def determite_work(connection_from_user):
@@ -192,9 +194,9 @@ def opt_v1_without_change_path(connection_from_user, ranked_info, info_about_wor
         x_i = []
         for i in max_path:
             print("optimal var {0}: (floor){1}\n".format( f'x_{i}', round(float(dict_values.get(f'x_{i}').value), 3)))
-            new_t.append(info_about_work[i]*(1-alfa[i]*float(dict_values.get(f'x_{i}').value)))
-            x_i.append(float(dict_values.get(f'x_{i}').value))
-            print(round(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}').value),2))
+            new_t.append(round(info_about_work[i]*(1-alfa[i]*float(dict_values.get(f'x_{i}').value)), 3))
+            x_i.append(round(float(dict_values.get(f'x_{i}').value),3))
+            print(round(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}').value), 3))
         # print(x_i)
         # print(new_t)
         return [x_i, string_model, new_t, prob.value]
@@ -284,11 +286,11 @@ def opt_v2_math_full_model(connection_from_user, ranked_info,info_about_work,inf
         new_tao = []
         for i in range(len(connection_from_user)):
             # print("optimal var {0}: (floor){1}\n".format(f'x_{i}', round(float(dict_values.get(f'x_{i}').value), 3)))
-            new_t.append(round(float(info_about_work[i] * (1 - alfa[i] * float(dict_values.get(f'x_{i}').value))),3))
-            x_i.append(round(float(dict_values.get(f'x_{i}').value),2))
+            new_t.append(round(float(info_about_work[i] * (1 - alfa[i] * float(dict_values.get(f'x_{i}').value))), 3))
+            x_i.append(round(float(dict_values.get(f'x_{i}').value), 3))
             # print(f't_{i}', round(float(dict_values.get(f't_{i}').value),3))
-            new_tao.append(round(float(dict_values.get(f't_{i}').value),2))
-            new_T.append(round(float(dict_values.get(f't_{i}').value) + info_about_work[i] * (1 - alfa[i] * float(dict_values.get(f'x_{i}').value)),2))
+            new_tao.append(round(float(dict_values.get(f't_{i}').value), 3))
+            new_T.append(round(float(dict_values.get(f't_{i}').value) + info_about_work[i] * (1 - alfa[i] * float(dict_values.get(f'x_{i}').value)), 3))
             # print(round(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}').value), 2))
         # print(x_i)
         # print(new_t)
@@ -458,11 +460,11 @@ def opt_v4_math_full_model(connection_from_user, ranked_info, info_about_work, i
         for i in range(len(connection_from_user)):
             print("optimal var {0}: (floor){1} ".format(f'x_{i}', round(float(dict_values.get(f'x_{i}').value), 3)))
             new_t.append(round(float(info_about_work[i] * (1 - alfa[i] * float(dict_values.get(f'x_{i}').value))), 3))
-            x_i.append(round(float(dict_values.get(f'x_{i}').value), 2))
+            x_i.append(round(float(dict_values.get(f'x_{i}').value), 3))
             # print(f't_{i}', round(float(dict_values.get(f't_{i}').value),3))
-            new_tao.append(round(float(dict_values.get(f't_{i}').value), 2))
+            new_tao.append(round(float(dict_values.get(f't_{i}').value), 3))
             new_T.append(round(float(dict_values.get(f't_{i}').value) + info_about_work[i] * (
-                        1 - alfa[i] * float(dict_values.get(f'x_{i}').value)), 2))
+                        1 - alfa[i] * float(dict_values.get(f'x_{i}').value)), 3))
             # print(round(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}').value), 2))
             # print(x_i)
             # print(new_t)
@@ -479,9 +481,11 @@ def opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, i
     # x = cp.Variable()
     # print(ranked_info)
     constraints = []
+    string_model = []
     for i in range(len(connection_from_user)):
         dict_values[f'x_{i}'] = cp.Variable()
         dict_values[f't_{i}'] = cp.Variable()
+        string_model.append(f'x_{i} <= 0')
         constraints.append(dict_values.get(f'x_{i}') <= 0)
     dict_values[f'T_k'] = cp.Variable()
 
@@ -493,6 +497,8 @@ def opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, i
             for i_1 in j:
                 # print(connection_from_user[i_1])
                 for i_2 in connection_from_user[i_1]:
+                    string_model.append(f"t{i_1+1}>= {info_about_work[i_2]}*(1-{alfa[i_2]}*x{i_2+1})")
+
                     print( f"t{i_1+1}>= {info_about_work[i_2]}*(1-{alfa[i_2]}*x{i_2+1})")
                     constraints.append(
                         dict_values.get(f't_{i_1}') >= info_about_work[i_2] * (
@@ -502,6 +508,8 @@ def opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, i
             for i_1 in j:
                 # print(connection_from_user[i_1])
                 for i_2 in connection_from_user[i_1]:
+                    string_model.append( f"t{i_1+1} >= t{i_2+1} + {info_about_work[i_2]}*(1-{alfa[i_2]}*x{i_2+1})")
+
                     print( f"t{i_1+1} >= t{i_2+1} + {info_about_work[i_2]}*(1-{alfa[i_2]}*x{i_2+1}),")
 
                     constraints.append(
@@ -513,6 +521,8 @@ def opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, i
         #         for i_2 in connection_from_user[i_1]:
     # print()
     for i in range(len(connection_from_user)):
+        string_model.append(f"Tk>= t{i+1} +{info_about_work[i]}*(1-{alfa[i]}*x{i+1})")
+
         print(f"Tk>= t{i+1} +{info_about_work[i]}*(1-{alfa[i]}*x{i+1}),")
 
         constraints.append(dict_values.get(f'T_k') >= dict_values.get(f't_{i}') + info_about_work[i] * (
@@ -522,11 +532,16 @@ def opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, i
     #     print(f"{info_about_work[i]}*(1-{alfa[i]}*x{i+1}) >= {info_about_faster_work[i]},")
     #
     #     constraints.append(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}')) >= info_about_faster_work[i])
+    string_model.append(f"T_k == {max_user_time}")
 
     constraints.append(dict_values.get(f'T_k') == max_user_time)
 
     # constraints.append(sum([dict_values.get(f'x_{i}') for i in range(len(connection_from_user))]) <= money)
-
+    prom_text_val = ''
+    for i in range(len(connection_from_user)):
+        prom_text_val += f'x_{i} + '
+    prom_text_val = prom_text_val[:-2]
+    string_model.append(prom_text_val+' -> min')
     obj = cp.Minimize(sum([dict_values.get(f'x_{i}') for i in range(len(connection_from_user))]))
 
     prob = cp.Problem(obj, constraints)
@@ -536,10 +551,27 @@ def opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, i
     print("optimal val:", np.round(prob.value, 5))
     if str(prob.status) == 'optimal':
         k = 0
+        new_t = []
+        x_i = []
+        new_tao = []
+        new_T = []
         for i in range(len(connection_from_user)):
-            print(f'x_{i}', round(float(dict_values.get(f'x_{i}').value), 3))
-            k += dict_values.get(f'x_{i}').value
-        print(k)
+            print("optimal var {0}: (floor){1} ".format(f'x_{i}', round(float(dict_values.get(f'x_{i}').value), 3)))
+            new_t.append(round(float(info_about_work[i] * (1 - alfa[i] * float(dict_values.get(f'x_{i}').value))), 3))
+            x_i.append(round(float(dict_values.get(f'x_{i}').value), 3))
+            # print(f't_{i}', round(float(dict_values.get(f't_{i}').value),3))
+            new_tao.append(round(float(dict_values.get(f't_{i}').value), 3))
+            new_T.append(round(float(dict_values.get(f't_{i}').value) + info_about_work[i] * (
+                    1 - alfa[i] * float(dict_values.get(f'x_{i}').value)), 3))
+            # print(round(info_about_work[i] * (1 - alfa[i] * dict_values.get(f'x_{i}').value), 2))
+            # print(x_i)
+            # print(new_t)
+        # print('-----')
+        # print(prom_text)
+        # print('-----')
+        return [new_tao, new_t, new_T, x_i, prob.value, string_model]
+    else:
+        return [404, string_model]
 
 
 def main(connection_from_user, info_about_work, info_about_faster_work, alfa, money, max_user_time, min_user_time, file_name):
@@ -557,10 +589,10 @@ def main(connection_from_user, info_about_work, info_about_faster_work, alfa, mo
 
     opt_4 = opt_v4_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
     # print('opt7')
-    # opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, min_user_time, info_about_t_and_T)
-    to_excel_data(file_name,connection_from_user, ranked_info, info_about_work, info_about_faster_work, alfa, opt_1, opt_2, opt_4)
+    opt_7 = opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, min_user_time, info_about_t_and_T)
+    to_excel_data(file_name,connection_from_user, ranked_info, info_about_work, info_about_faster_work, alfa, opt_1, opt_2, opt_4, opt_7,money, max_user_time, min_user_time)
 
-def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, info_about_faster_work, alfa, opt_1, opt_2, opt_4):
+def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, info_about_faster_work, alfa, opt_1, opt_2, opt_4, opt_7,money, max_user_time, min_user_time):
     # print(connection_from_user)
     # print(ranked_info)
     wb2 = load_workbook('Книга1.xlsx', data_only=True)
@@ -568,10 +600,12 @@ def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, 
     ws4['J4'].value = 'Успешно' if opt_1[0] != 404 else 'Неуспешно'
     ws4['J5'].value = 'Успешно' if opt_2[0] != 404 else 'Неуспешно'
     ws4['J6'].value = 'Успешно' if opt_4[0] != 404 else 'Неуспешно'
+    ws4['J7'].value = 'Успешно' if opt_7[0] != 404 else 'Неуспешно'
+
+    ws4['J4'].font = Font(size=11, color='00595959', b=False, name='Arial')
 
 
-
-    ranked_excel(ws4, ranked_info, connection_from_user, info_about_work, info_about_faster_work, alfa)
+    ranked_excel(ws4, ranked_info, connection_from_user, info_about_work, info_about_faster_work, alfa, money, max_user_time, min_user_time)
     ws5 = wb2['ОПТ №1']
     opt_v1_excel(ws5, opt_1)
 
@@ -579,12 +613,14 @@ def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, 
     opt_v2_excel(ws6, opt_2)
 
     ws7 = wb2['ОПТ №3']
-    opt_v2_excel(ws7, opt_4)
+    opt_v4_excel(ws7, opt_4)
 
+    ws8 = wb2['ОПТ №4']
+    opt_v7_excel(ws8, opt_7)
 
     wb2.save(f'{file_name}.xlsx')
 
-def ranked_excel(ws4,ranked_info,connection_from_user, info_about_work,info_about_faster_work,alfa):
+def ranked_excel(ws4,ranked_info,connection_from_user, info_about_work,info_about_faster_work, alfa, money, max_user_time, min_user_time):
     k = 3
     for i in ranked_info:
         for j in ranked_info.get(i):
@@ -600,6 +636,18 @@ def ranked_excel(ws4,ranked_info,connection_from_user, info_about_work,info_abou
             ws4[f'F{k}'].value = info_about_faster_work[j]
             ws4[f'G{k}'].value = alfa[j]
             k += 1
+
+    k += 1
+    ws4[f'B{k}'].value = 'Средства'
+    ws4[f'F{k}'].value = money
+    k += 1
+    ws4[f'B{k}'].value = 'Максимальная длительность проекта'
+    ws4[f'F{k}'].value = min_user_time
+    k += 1
+    ws4[f'B{k}'].value = 'Минимальная длительность проекта'
+    ws4[f'F{k}'].value = max_user_time
+    k += 1
+
 
 def opt_v1_excel(ws5, opt_1):
     k = 2
@@ -633,7 +681,7 @@ def opt_v2_excel(ws6, opt_2):
 
     if opt_2[0] != 404:
         ws6['P1'] = 'Успешно'
-        ws6['X1'] = opt_2[-2]
+        ws6['W1'] = opt_2[-2]
         k = 3
         # print(opt_1[0])
         # print(opt_1[2])
@@ -646,7 +694,7 @@ def opt_v2_excel(ws6, opt_2):
             ws6[f'S{k}'].value = opt_2[3][i]
             # print(opt_2[4])
             # ws6[f'S{k}'].value = opt_2[4][i]
-            k+=1
+            k += 1
 
 
     else:
@@ -661,7 +709,7 @@ def opt_v4_excel(ws7, opt_4):
 
     if opt_4[0] != 404:
         ws7['P1'] = 'Успешно'
-        ws7['V1'] = opt_4[-2]
+        ws7['U1'] = opt_4[-2]
         k = 3
         # print(opt_1[0])
         # print(opt_1[2])
@@ -672,6 +720,31 @@ def opt_v4_excel(ws7, opt_4):
             ws7[f'Q{k}'].value = opt_4[1][i]
             ws7[f'R{k}'].value = opt_4[2][i]
             ws7[f'S{k}'].value = opt_4[3][i]
+            # print(opt_2[4])
+            # ws6[f'S{k}'].value = opt_2[4][i]
+            k += 1
+    else:
+        ws7['P1'] = 'Неуспешно'
+
+def opt_v7_excel(ws8, opt7):
+    k = 2
+    for i in opt7[-1]:
+        ws8[f'A{k}'].value = i
+        k += 1
+
+    if opt7[0] != 404:
+        ws8['P1'] = 'Успешно'
+        ws8['Y1'] = opt7[-2]
+        k = 3
+        # print(opt_1[0])
+        # print(opt_1[2])
+
+        for i in range(len(opt7[0])):
+            ws8[f'O{k}'].value = k - 2
+            ws8[f'P{k}'].value = opt7[0][i]
+            ws8[f'Q{k}'].value = opt7[1][i]
+            ws8[f'R{k}'].value = opt7[2][i]
+            ws8[f'S{k}'].value = opt7[3][i]
             # print(opt_2[4])
             # ws6[f'S{k}'].value = opt_2[4][i]
             k += 1
