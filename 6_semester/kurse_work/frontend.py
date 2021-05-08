@@ -83,7 +83,7 @@ def get_all_data_for_test():
     bk.main(user.connections,user.time_normal,user.time_faster,user.alfas_for_work,
             int(lg_money_data.get()),
             int(lg_max_work_data.get()),
-            int(lg_min_work_data.get()))
+            int(lg_min_work_data.get()),lg_file_data.get())
 
 
 global connection_window
@@ -111,6 +111,11 @@ lg_money = Label(window, text="Введите количество средст�
 lg_money.grid(column=0, row=3)
 lg_money_data = Entry(window, width=25)
 lg_money_data.grid(column=1, row=3)
+
+lg_file = Label(window, text="Напишите название файла")
+lg_file.grid(column=0, row=4)
+lg_file_data = Entry(window, width=25)
+lg_file_data.grid(column=1, row=4)
 
 btn_for_input_data_connection = Button(window, text="Ввести данные.",
                                                     command=get_all_data_for_test)
