@@ -458,7 +458,7 @@ def opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, i
             k += dict_values.get(f'x_{i}').value
         print(k)
 
-def main(connection_from_user, info_about_work, info_about_faster_work, alfa, money, max_user_time):
+def main(connection_from_user, info_about_work, info_about_faster_work, alfa, money, max_user_time, min_user_time):
     ranked_info = determite_work(connection_from_user)
     print('info_about_t_and_T')
     print('coast' , info_about_work)
@@ -470,10 +470,9 @@ def main(connection_from_user, info_about_work, info_about_faster_work, alfa, mo
     print('opt2')
     opt_v2_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
     print('opt4')
-
     opt_v4_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
     print('opt7')
-    opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
+    opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, min_user_time, info_about_t_and_T)
 
 
 # пример из начала - то, что он дает на первом методе - ок (не было еще параметров)
@@ -501,9 +500,10 @@ def main(connection_from_user, info_about_work, info_about_faster_work, alfa, mo
 #      32)
 
 #опт_v7
-main([[-1],[-1],[-1],[0,1],[0,1,2],[0,1,2],[5],[3,4,6]],
+main([[-1], [-1], [-1], [0, 1], [0, 1, 2], [0, 1, 2], [5], [3, 4, 6]],
      [20, 10, 5, 30, 10, 15, 10, 10],
-     [15, 5, 5, 10, 5, 10, 3, 3,10],
-     [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1,0.2],
+     [15, 5, 5, 10, 5, 10, 3, 3],
+     [0.1, 0.15, 0.1, 0.2, 0.2, 0.01, 0.05, 0.1],
      80,
+     32,
      80)
