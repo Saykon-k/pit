@@ -379,6 +379,11 @@ def find_all_paths_T(connection_from_user, ranked_info, info_about_work):
         # for i_1, j_1 in info_about_t_and_T.items():
         #     if
 
+def find_sub_paths(connection_from_user, max_path):
+    print(connection_from_user[3])
+    for i in reversed(max_path):
+        print(i)
+
 
 def opt_v4_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time,info_about_t_and_T):
     dict_values = {}
@@ -582,6 +587,7 @@ def main(connection_from_user, info_about_work, info_about_faster_work, alfa, mo
     print('find_max_path')
     max_path = find_max_path(connection_from_user, info_about_t_and_T)
     # print('opt1')
+    # find_sub_paths(connection_from_user, max_path)
     opt_1 = opt_v1_without_change_path(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time)
     # print('opt2')
     opt_2 = opt_v2_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
@@ -590,22 +596,40 @@ def main(connection_from_user, info_about_work, info_about_faster_work, alfa, mo
     opt_4 = opt_v4_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, max_user_time, info_about_t_and_T)
     # print('opt7')
     opt_7 = opt_v7_math_full_model(connection_from_user, ranked_info, info_about_work, info_about_faster_work, max_path, alfa, money, min_user_time, info_about_t_and_T)
-    to_excel_data(file_name,connection_from_user, ranked_info, info_about_work, info_about_faster_work, alfa, opt_1, opt_2, opt_4, opt_7,money, max_user_time, min_user_time)
+    to_excel_data(file_name,connection_from_user, ranked_info, info_about_work, info_about_faster_work, alfa, opt_1, opt_2, opt_4, opt_7,money, max_user_time, min_user_time, max_path)
 
-def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, info_about_faster_work, alfa, opt_1, opt_2, opt_4, opt_7,money, max_user_time, min_user_time):
+def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, info_about_faster_work, alfa, opt_1, opt_2, opt_4, opt_7,money, max_user_time, min_user_time,max_path):
     # print(connection_from_user)
     # print(ranked_info)
     wb2 = load_workbook('Книга1.xlsx', data_only=True)
     ws4 = wb2["Ранги"]
-    ws4['J4'].value = 'Успешно' if opt_1[0] != 404 else 'Неуспешно'
-    ws4['J5'].value = 'Успешно' if opt_2[0] != 404 else 'Неуспешно'
-    ws4['J6'].value = 'Успешно' if opt_4[0] != 404 else 'Неуспешно'
-    ws4['J7'].value = 'Успешно' if opt_7[0] != 404 else 'Неуспешно'
+    ws4['K4'].value = 'Успешно' if opt_1[0] != 404 else 'Неуспешно'
+    ws4['K5'].value = 'Успешно' if opt_2[0] != 404 else 'Неуспешно'
+    ws4['K6'].value = 'Успешно' if opt_4[0] != 404 else 'Неуспешно'
+    ws4['K3'].value = 'Успешно' if opt_7[0] != 404 else 'Неуспешно'
 
-    ws4['J4'].font = Font(size=11, color='00595959', b=False, name='Arial')
+    ws4['K4'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_1[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    ws4['K5'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_2[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    ws4['K6'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_4[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    ws4['K3'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_7[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+
+    ws4['K3'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
+    ws4['K4'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
+    ws4['K5'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
+    ws4['K6'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
+
+    ws4['K3'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+    ws4['K4'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+    ws4['K5'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+    ws4['K6'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
 
 
-    ranked_excel(ws4, ranked_info, connection_from_user, info_about_work, info_about_faster_work, alfa, money, max_user_time, min_user_time)
+
+
+    # ws4['J4'].font = Font(size=11, color='00595959', b=False, name='Arial')
+
+
+    ranked_excel(ws4, ranked_info, connection_from_user, info_about_work, info_about_faster_work, alfa, money, max_user_time, min_user_time,max_path)
     ws5 = wb2['ОПТ №1']
     opt_v1_excel(ws5, opt_1)
 
@@ -620,7 +644,7 @@ def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, 
 
     wb2.save(f'{file_name}.xlsx')
 
-def ranked_excel(ws4,ranked_info,connection_from_user, info_about_work,info_about_faster_work, alfa, money, max_user_time, min_user_time):
+def ranked_excel(ws4,ranked_info,connection_from_user, info_about_work,info_about_faster_work, alfa, money, max_user_time, min_user_time,max_path):
     k = 3
     for i in ranked_info:
         for j in ranked_info.get(i):
@@ -635,18 +659,43 @@ def ranked_excel(ws4,ranked_info,connection_from_user, info_about_work,info_abou
             ws4[f'E{k}'].value = info_about_work[j]
             ws4[f'F{k}'].value = info_about_faster_work[j]
             ws4[f'G{k}'].value = alfa[j]
+            for fot in ['A','B','C','D','E','F','G']:
+                ws4[f'{fot}{k}'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+                ws4[f'{fot}{k}'].font = Font(size=12)
+
             k += 1
 
     k += 1
     ws4[f'B{k}'].value = 'Средства'
-    ws4[f'F{k}'].value = money
+    ws4[f'D{k}'].value = money
+
+    ws4[f'B{k}'].font = Font(size=14)
+    ws4[f'D{k}'].font = Font(size=14)
+
     k += 1
-    ws4[f'B{k}'].value = 'Максимальная длительность проекта'
-    ws4[f'F{k}'].value = min_user_time
+    ws4[f'B{k}'].value = 'T max проекта'
+    ws4[f'D{k}'].value = min_user_time
+
+    ws4[f'B{k}'].font = Font(size=14)
+    ws4[f'D{k}'].font = Font(size=14)
+
     k += 1
-    ws4[f'B{k}'].value = 'Минимальная длительность проекта'
-    ws4[f'F{k}'].value = max_user_time
-    k += 1
+    ws4[f'B{k}'].value = 'T min проекта'
+    ws4[f'D{k}'].value = max_user_time
+
+    ws4[f'B{k}'].font = Font(size=14)
+    ws4[f'D{k}'].font = Font(size=14)
+
+    ws4[f'O2'].value = sum([info_about_work[i] for i in max_path])
+
+
+    k = 3
+    for i in reversed(max_path):
+        ws4[f'M{k}'].value = i
+        ws4[f'M{k}'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+        ws4[f'M{k}'].font = Font(size=14)
+
+        k += 1
 
 
 def opt_v1_excel(ws5, opt_1):
@@ -654,10 +703,15 @@ def opt_v1_excel(ws5, opt_1):
     for i in opt_1[1]:
         ws5[f'A{k}'].value = i
         k += 1
+    ws5['P1'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_1[0] != 404 else PatternFill(fill_type='solid', start_color='FF0000')
 
     if opt_1[0] != 404:
-        ws5['P1'] = 'Успешно'
-        ws5['X1'] = opt_1[3]
+        ws5['P1'].value = 'Успешно'
+        ws5['X1'].value = opt_1[3]
+
+        ws5['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+
+
         k = 3
         # print(opt_1[0])
         # print(opt_1[2])
@@ -669,7 +723,8 @@ def opt_v1_excel(ws5, opt_1):
 
 
     else:
-        ws5['P1'] = 'Неуспешно'
+        ws5['P1'].value = 'Неуспешно'
+        ws5['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
 
 
 def opt_v2_excel(ws6, opt_2):
@@ -678,11 +733,13 @@ def opt_v2_excel(ws6, opt_2):
     for i in opt_2[-1]:
         ws6[f'A{k}'].value = i
         k += 1
+    ws6['P1'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_2[0] != 404 else PatternFill(fill_type='solid', start_color='FF0000')
 
     if opt_2[0] != 404:
-        ws6['P1'] = 'Успешно'
+        ws6['P1'].value = 'Успешно'
         ws6['W1'] = opt_2[-2]
         k = 3
+        ws6['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
         # print(opt_1[0])
         # print(opt_1[2])
 
@@ -698,7 +755,8 @@ def opt_v2_excel(ws6, opt_2):
 
 
     else:
-        ws6['P1'] = 'Неуспешно'
+        ws6['P1'].value = 'Неуспешно'
+        ws6['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
 
 def opt_v4_excel(ws7, opt_4):
     k = 2
@@ -706,11 +764,14 @@ def opt_v4_excel(ws7, opt_4):
     for i in opt_4[-1]:
         ws7[f'A{k}'].value = i
         k += 1
+    ws7['P1'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_4[0] != 404 else PatternFill(fill_type='solid', start_color='FF0000')
 
     if opt_4[0] != 404:
-        ws7['P1'] = 'Успешно'
+        ws7['P1'].value = 'Успешно'
         ws7['U1'] = opt_4[-2]
         k = 3
+        ws7['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+
         # print(opt_1[0])
         # print(opt_1[2])
 
@@ -724,17 +785,21 @@ def opt_v4_excel(ws7, opt_4):
             # ws6[f'S{k}'].value = opt_2[4][i]
             k += 1
     else:
-        ws7['P1'] = 'Неуспешно'
+        ws7['P1'].value = 'Неуспешно'
+        ws7['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
 
 def opt_v7_excel(ws8, opt7):
     k = 2
     for i in opt7[-1]:
         ws8[f'A{k}'].value = i
         k += 1
+    ws8['P1'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt7[0] != 404 else PatternFill(fill_type='solid', start_color='FF0000')
 
     if opt7[0] != 404:
-        ws8['P1'] = 'Успешно'
-        ws8['Y1'] = opt7[-2]
+        ws8['P1'].value = 'Успешно'
+        ws8['X1'] = opt7[-2]
+        ws8['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+
         k = 3
         # print(opt_1[0])
         # print(opt_1[2])
@@ -749,7 +814,8 @@ def opt_v7_excel(ws8, opt7):
             # ws6[f'S{k}'].value = opt_2[4][i]
             k += 1
     else:
-        ws7['P1'] = 'Неуспешно'
+        ws8['P1'].value = 'Неуспешно'
+        ws8['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
 
 
 
@@ -813,3 +879,13 @@ main([[-1], [-1], [-1], [0, 1], [0, 1, 2], [0, 1, 2], [5], [3, 4, 6]],
      32,
      80,
      'emem')
+main([[-1],[-1],[-1],[0],[0],[2],[1,4,5],[1,4,5],[3,6],[3],[1,4,5,9]],
+     [8,10,6,9,5,2,4,13,8,17,10],
+     [3,4,1,1,1,1,1,4,1,6,2],
+     [0.6,0.8,0.4,0.6,0.3,0.2,0.3,0.9,0.5,0.10,0.7],
+     10,
+     25,
+     100,
+     'max_none')
+a = [8,10,6,9,5,2,4,13,8,17,10]
+print(a[0]+a[3]+a[9]+a[10])
