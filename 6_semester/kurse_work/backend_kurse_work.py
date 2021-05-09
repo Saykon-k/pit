@@ -603,15 +603,15 @@ def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, 
     # print(ranked_info)
     wb2 = load_workbook('Книга1.xlsx', data_only=True)
     ws4 = wb2["Ранги"]
-    ws4['K4'].value = 'Успешно' if opt_1[0] != 404 else 'Неуспешно'
-    ws4['K5'].value = 'Успешно' if opt_2[0] != 404 else 'Неуспешно'
-    ws4['K6'].value = 'Успешно' if opt_4[0] != 404 else 'Неуспешно'
-    ws4['K3'].value = 'Успешно' if opt_7[0] != 404 else 'Неуспешно'
+    ws4['K3'].value = 'Успешно' if opt_1[0] != 404 else 'Неуспешно'
+    ws4['K4'].value = 'Успешно' if opt_2[0] != 404 else 'Неуспешно'
+    ws4['K5'].value = 'Успешно' if opt_4[0] != 404 else 'Неуспешно'
+    ws4['K6'].value = 'Успешно' if opt_7[0] != 404 else 'Неуспешно'
 
-    ws4['K4'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_1[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
-    ws4['K5'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_2[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
-    ws4['K6'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_4[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
-    ws4['K3'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_7[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    ws4['K3'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_1[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    ws4['K4'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_2[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    ws4['K5'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_4[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    ws4['K6'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_7[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
 
     ws4['K3'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
     ws4['K4'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
@@ -626,7 +626,7 @@ def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, 
 
 
 
-    # ws4['J4'].font = Font(size=11, color='00595959', b=False, name='Arial')
+    # ws4['J4'].font = Font(size=11, color='00595959', b=False)
 
 
     ranked_excel(ws4, ranked_info, connection_from_user, info_about_work, info_about_faster_work, alfa, money, max_user_time, min_user_time,max_path)
@@ -709,7 +709,7 @@ def opt_v1_excel(ws5, opt_1):
         ws5['P1'].value = 'Успешно'
         ws5['X1'].value = opt_1[3]
 
-        ws5['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+        ws5['P1'].font = Font(size=12, color='FFFFFF')
 
 
         k = 3
@@ -724,7 +724,7 @@ def opt_v1_excel(ws5, opt_1):
 
     else:
         ws5['P1'].value = 'Неуспешно'
-        ws5['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+        ws5['P1'].font = Font(size=12, color='FFFFFF')
 
 
 def opt_v2_excel(ws6, opt_2):
@@ -739,7 +739,7 @@ def opt_v2_excel(ws6, opt_2):
         ws6['P1'].value = 'Успешно'
         ws6['W1'] = opt_2[-2]
         k = 3
-        ws6['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+        ws6['P1'].font = Font(size=12, color='FFFFFF')
         # print(opt_1[0])
         # print(opt_1[2])
 
@@ -756,7 +756,7 @@ def opt_v2_excel(ws6, opt_2):
 
     else:
         ws6['P1'].value = 'Неуспешно'
-        ws6['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+        ws6['P1'].font = Font(size=12, color='FFFFFF')
 
 def opt_v4_excel(ws7, opt_4):
     k = 2
@@ -770,7 +770,7 @@ def opt_v4_excel(ws7, opt_4):
         ws7['P1'].value = 'Успешно'
         ws7['U1'] = opt_4[-2]
         k = 3
-        ws7['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+        ws7['P1'].font = Font(size=12, color='FFFFFF')
 
         # print(opt_1[0])
         # print(opt_1[2])
@@ -786,7 +786,7 @@ def opt_v4_excel(ws7, opt_4):
             k += 1
     else:
         ws7['P1'].value = 'Неуспешно'
-        ws7['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+        ws7['P1'].font = Font(size=12, color='FFFFFF')
 
 def opt_v7_excel(ws8, opt7):
     k = 2
@@ -798,7 +798,7 @@ def opt_v7_excel(ws8, opt7):
     if opt7[0] != 404:
         ws8['P1'].value = 'Успешно'
         ws8['X1'] = opt7[-2]
-        ws8['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+        ws8['P1'].font = Font(size=12, color='FFFFFF')
 
         k = 3
         # print(opt_1[0])
@@ -815,7 +815,7 @@ def opt_v7_excel(ws8, opt7):
             k += 1
     else:
         ws8['P1'].value = 'Неуспешно'
-        ws8['P1'].font = Font(size=11, color='FFFFFF', name='Arial')
+        ws8['P1'].font = Font(size=12, color='FFFFFF')
 
 
 
