@@ -4,33 +4,42 @@
         <meta charset="utf-8">
         <title>hw4</title>
         <style>
-         .tot {
-  writing-mode: vertical-rl;
-  color: #852c98;
+         .feedback {
+                position: relative;
+                top: 100px;
+                left: -385px;
+                width: 380px;
+                height: 180px;
+
+                background: DarkSlateGrey;
+                color: white;
+
+                transition: all 1s;
+            }
+            .feedback:hover {
+                left: -20px;
+            }
+            .feedback_pic_class {
+                width: 380px;
+                padding: 10px;
+            }
+            #pic_kven {
+                width: 240px;
+                height: 120px;
+                float: left;
+                margin-right: 10px;
+            }
         </style>
 
 }
-<!--        <style>-->
-<!--   table {-->
-<!--    border-collapse: collapse;-->
-<!--    height: 350px;-->
-<!--    width: 300px;-->
-<!--   }-->
-<!--   table td {-->
-<!--    border: 1px solid #333;-->
-<!--    padding: 5px;-->
-<!--   }-->
-<!--  </style>-->
+
     </head>
     <body>
-    <h1>Тег img</h1>
-    <img src="C:/Users/lenov/Desktop/pic for winow/redhead-red-dress-girl-sitting-4k-6s.jpg">
-   <h1></h1>
-<h2 class="tot">Вертикальный текст</h2>
-    <div class="battery low">
-    <img src="hqdefault.jpg">
-    Если у Вас остались вопросы - позвоните, мы будет рады ответить.
-        <div class="title">Обратная связь</div>
-    </div>
+        <div class="feedback">
+            <div class="feedback_pic_class">
+                <img src="https://i.ytimg.com/vi/_lrqgL2ClwY/hqdefault.jpg" id="pic_kven" alt="Image of a person that does not exist.">
+                88005553535 Проще позвонить чем ... Звонок платный. <br>
+            </div>
+        </div>
     </body>
 </html>
