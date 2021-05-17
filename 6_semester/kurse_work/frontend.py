@@ -7,7 +7,7 @@ class Service(object):
     def __init__(self):
 
         self.window_for_input_data_connection = Tk()
-        self.window_for_input_data_connection.title("Добро пожаловать в приложение PythonRu")
+        self.window_for_input_data_connection.title("Plan speed data")
         self.window_for_input_data_connection.geometry('800x600')
         self.lg_connection = Label(self.window_for_input_data_connection,
                                    text="Введите номера,\n которые связаны с новой работой через запятую\n(если работа несвязана ни с чем, то введите '-1'")
@@ -91,7 +91,7 @@ global user
 
 user = us.user_data()
 window = Tk()
-window.title("Добро пожаловать в приложение PythonRu")
+window.title("Plan speed")
 window.geometry('1000x650')
 
 btn = Button(window, text="Добавить новую работу.", command=clicked)
@@ -119,7 +119,7 @@ lg_file_data.grid(column=1, row=4)
 
 btn_for_input_data_connection = Button(window, text="Ввести данные.",
                                                     command=get_all_data_for_test)
-btn_for_input_data_connection.grid(column=0, row=4)
+btn_for_input_data_connection.grid(column=0, row=5)
 
 
 window.mainloop()
