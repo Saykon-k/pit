@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Saykov K.A</title>
+	<style type="text/css">
+		.main {
+			border: 1px solid blue;
+			margin: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+		}
+
+		.child {
+			width: 100px;
+			height: 200px;
+			margin: 20px;
+			border: 1px solid black;
+			cursor: pointer;
+			display: flex;
+			flex-wrap: wrap;
+			overflow: hidden;
+		}
+
+		.child.selected {
+			background-color: yellow;
+		}
+
+		.child .circle {
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			background-color: gray;
+			color: gray;
+			animation: animationScale linear 5s;
+		}
+
+		@keyframes animationScale {
+			from {
+				transform: scale(0);
+			}
+			
+			to {
+				transform: scale(1);
+			}
+		}
+
+		.child:first-child,
+		.child:last-child {
+			justify-content: flex-end;
+			align-items: flex-end;
+		}
+
+		.child:first-child .circle,
+		.child:last-child .circle {
+			width: 30px;
+			height: 30px;
+			background-color: red;
+			
+			color: red;
+		}
+
+		.child:nth-child(odd) .circle {
+			animation: animationScale linear 5s, OddAnimation 5s linear;
+		}
+
+		@keyframes OddAnimation {
+			from {
+				background-color: blue;
+			}
+			
+			to {
+				background-color: currentcolor;
+			}
+		}
+	</style>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<body>    
+		<div class="main">
+				<div class="child"></div>
+				<div class="child"></div>
+				<div class="child"></div>
+				<div class="child"></div>
+				<div class="child"></div>
+		</div>
+		<button id="add">Добавить</button>
+		<button id="remove">Удалить</button>
+		<button id="change">Изменить</button>
+</body>
+<!-- partial -->
+  <script>
+  	const mainRef = document.querySelector('.main');
+
+		const addButtonRef = document.querySelector('#add');
+		const removeButtonRef = document.querySelector('#remove');
+		const changeButtonRef = document.querySelector('#change');
+
+		const childsRef = () => Array.from(document.querySelectorAll('.child'));
+
+		function childReflistener({ target }) {
+			if (target.parentElement.classList.contains('main')) {
+				console.log('Нажатый элемент является ребенком элемента main');
+			}
+
+			target.classList.toggle('selected');
+		}
+
+		function mainRefListener({ target }) {
+			childsRef().forEach((childRef) => {
+				const circleRef = document.createElement('div');
+				circleRef.classList.add('circle');
+				childRef.appendChild(circleRef);
+			})
+		}
+
+		function childs() {	
+			mainRef.removeEventListener('mouseenter', mainRefListener)
+			mainRef.addEventListener('mouseenter', mainRefListener)
+
+			childsRef().forEach((childRef) => {
+				childRef.removeEventListener('click', childReflistener)
+				childRef.addEventListener('click', childReflistener)
+			})
+		}
+
+		childs();
+
+		addButtonRef.addEventListener('click', () => {
+			const newChildRef = document.createElement('div');
+			newChildRef.classList.add('child');
+			mainRef.appendChild(newChildRef);
+			childs();
+		})
+
+		removeButtonRef.addEventListener('click', () => {
+			const selectedRefs = Array.from(document.querySelectorAll('.child.selected'));
+			selectedRefs.forEach((item) => item.remove())
+		})
+
+		changeButtonRef.addEventListener('click', () => {
+			childsRef().forEach((childRef) => childRef.classList.toggle('selected'))
+		})
+  </script>
+
+</body>
+</html>
