@@ -603,25 +603,25 @@ def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, 
     # print(ranked_info)
     wb2 = load_workbook('Книга1.xlsx', data_only=True)
     ws4 = wb2["Ранги"]
-    ws4['K3'].value = 'Успешно' if opt_1[0] != 404 else 'Неуспешно'
-    ws4['K4'].value = 'Успешно' if opt_2[0] != 404 else 'Неуспешно'
-    ws4['K5'].value = 'Успешно' if opt_4[0] != 404 else 'Неуспешно'
-    ws4['K6'].value = 'Успешно' if opt_7[0] != 404 else 'Неуспешно'
+    # ws4['K3'].value = 'Успешно' if opt_1[0] != 404 else 'Неуспешно'
+    ws4['K3'].value = 'Успешно' if opt_2[0] != 404 else 'Неуспешно'
+    ws4['K4'].value = 'Успешно' if opt_4[0] != 404 else 'Неуспешно'
+    ws4['K5'].value = 'Успешно' if opt_7[0] != 404 else 'Неуспешно'
 
-    ws4['K3'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_1[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
-    ws4['K4'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_2[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
-    ws4['K5'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_4[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
-    ws4['K6'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_7[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    # ws4['K3'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_1[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    ws4['K3'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_2[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    ws4['K4'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_4[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
+    ws4['K5'].fill = PatternFill(fill_type='solid', start_color='2A6FD7') if opt_7[0] != 404 else  PatternFill(fill_type='solid', start_color='FF0000')
 
     ws4['K3'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
     ws4['K4'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
     ws4['K5'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
-    ws4['K6'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
+    # ws4['K6'].font = Font(size=12, color='FFFFFF', bold=True, italic=True)
 
     ws4['K3'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
     ws4['K4'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
     ws4['K5'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
-    ws4['K6'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+    # ws4['K6'].alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
 
 
 
@@ -630,16 +630,16 @@ def to_excel_data(file_name,connection_from_user,ranked_info,  info_about_work, 
 
 
     ranked_excel(ws4, ranked_info, connection_from_user, info_about_work, info_about_faster_work, alfa, money, max_user_time, min_user_time,max_path)
-    ws5 = wb2['ОПТ №1']
-    opt_v1_excel(ws5, opt_1)
+    # ws5 = wb2['ОПТ №1']
+    # opt_v1_excel(ws5, opt_1)
 
-    ws6 = wb2['ОПТ №2']
+    ws6 = wb2['ОПТ №1']
     opt_v2_excel(ws6, opt_2)
 
-    ws7 = wb2['ОПТ №3']
+    ws7 = wb2['ОПТ №2']
     opt_v4_excel(ws7, opt_4)
 
-    ws8 = wb2['ОПТ №4']
+    ws8 = wb2['ОПТ №3']
     opt_v7_excel(ws8, opt_7)
 
     wb2.save(f'{file_name}.xlsx')
@@ -788,6 +788,7 @@ def opt_v4_excel(ws7, opt_4):
         ws7['P1'].value = 'Неуспешно'
         ws7['P1'].font = Font(size=12, color='FFFFFF')
 
+
 def opt_v7_excel(ws8, opt7):
     k = 2
     for i in opt7[-1]:
@@ -878,7 +879,7 @@ main([[-1], [-1], [-1], [0, 1], [0, 1, 2], [0, 1, 2], [5], [3, 4, 6]],
      60,
      32,
      80,
-     'emem')
+     'new_doc')
 main([[-1],[-1],[-1],[0],[0],[2],[1,4,5],[1,4,5],[3,6],[3],[1,4,5,9]],
      [8,10,6,9,5,2,4,13,8,17,10],
      [3,4,1,1,1,1,1,4,1,6,2],
